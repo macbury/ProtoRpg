@@ -1,2 +1,2 @@
 language: csharp
-solution: ProtoRpg.sln
+solution: ProtoRpg/ProtoRpg.csproj
