@@ -3,12 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtoRpg", "ProtoRpg\ProtoRpg.csproj", "{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A6185E4D-8113-4D8E-9E4B-FD69F4ED644F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6185E4D-8113-4D8E-9E4B-FD69F4ED644F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A6185E4D-8113-4D8E-9E4B-FD69F4ED644F}.Debug|x86.Build.0 = Debug|Any CPU
+		{A6185E4D-8113-4D8E-9E4B-FD69F4ED644F}.Release|x86.ActiveCfg = Release|Any CPU
+		{A6185E4D-8113-4D8E-9E4B-FD69F4ED644F}.Release|x86.Build.0 = Release|Any CPU
 		{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}.Debug|x86.ActiveCfg = Debug|x86
 		{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}.Debug|x86.Build.0 = Debug|x86
 		{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}.Release|x86.ActiveCfg = Release|x86
