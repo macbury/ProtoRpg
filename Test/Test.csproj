@@ -34,15 +34,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
     <Compile Include="Core\Utils\TestXmlManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Fixtures\dummy_xml_object.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Utils\" />
+    <Folder Include="Fixtures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProtoRpg\ProtoRpg.csproj">
+      <Project>{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}</Project>
+      <Name>ProtoRpg</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
