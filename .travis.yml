@@ -1,5 +1,9 @@
 language: csharp
 solution: ProtoRpg.sln
+before_install:
+  - sudo apt-get install -qq monodevelop libopenal-dev referenceassemblies-pcl ttf-mscorefonts-installer gtk-sharp2; # install needed packages for the monogame sdk
+  - wget http://www.monogame.net/releases/v3.5.1/monogame-sdk.run
+  - yes Y|sudo ./monogame-linux.run;
 install:
   - nuget restore ProtoRpg.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
