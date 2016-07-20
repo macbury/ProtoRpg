@@ -2,4 +2,6 @@
 <Config>
 	<Width>1280</Width>
 	<Height>720</Height>
+	<VirtualWidth>426</VirtualWidth>
+	<VirtualHeight>240</VirtualHeight>
 </Config>

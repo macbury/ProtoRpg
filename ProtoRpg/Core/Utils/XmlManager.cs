@@ -13,6 +13,7 @@ namespace ProtoRpg {
         XmlSerializer xml = new XmlSerializer(typeof(T));
         instance = (T)xml.Deserialize(textReader);
       }
+
       return instance;
     }
   }

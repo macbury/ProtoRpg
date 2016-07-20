@@ -13,6 +13,8 @@ namespace ProtoRpg {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     Config config;
+    Camera camera;
+    Texture2D player;
 
     public Core(Config config) {
       this.config = config;
@@ -32,9 +34,8 @@ namespace ProtoRpg {
     /// and initialize them as well.
     /// </summary>
     protected override void Initialize() {
-      // TODO: Add your initialization logic here
-            
       base.Initialize();
+      camera = new Camera(GraphicsDevice, this.config.VirtualWidth, this.config.VirtualHeight);
     }
 
     /// <summary>
@@ -44,8 +45,13 @@ namespace ProtoRpg {
     protected override void LoadContent() {
       // Create a new SpriteBatch, which can be used to draw textures.
       spriteBatch = new SpriteBatch(GraphicsDevice);
-
+      player = Content.Load<Texture2D>("debug_player.png");
       //TODO: use this.Content to load your game content here 
+    }
+
+    protected override void UnloadContent() {
+      Content.Unload();
+      base.UnloadContent();
     }
 
     /// <summary>
@@ -72,9 +78,12 @@ namespace ProtoRpg {
     /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Draw(GameTime gameTime) {
       graphics.GraphicsDevice.Clear(Color.Black);
-            
+      camera.Position += new Vector2(-1, -1);
+      camera.Update();
       //TODO: Add your drawing code here
-            
+      spriteBatch.Begin(transformMatrix: camera.View, samplerState: SamplerState.PointClamp); {
+        spriteBatch.Draw(player, Vector2.Zero);
+      } spriteBatch.End();
       base.Draw(gameTime);
     }
   }

@@ -53,10 +53,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Core\Utils\XmlManager.cs" />
+    <Compile Include="Core\Graphics\Camera.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
     <None Include="config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\debug_player.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -76,5 +80,6 @@
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Utils\" />
+    <Folder Include="Core\Graphics\" />
   </ItemGroup>
 </Project>
