@@ -7,7 +7,7 @@ namespace ProtoRpg {
   public class XmlManager<T> {
 
     // Load object from file
-    public T Load(string path) {
+    public static T Load(string path) {
       T instance;
       using(TextReader textReader = new StreamReader(path)) {
         XmlSerializer xml = new XmlSerializer(typeof(T));

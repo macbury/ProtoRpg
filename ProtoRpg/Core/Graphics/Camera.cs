@@ -6,7 +6,7 @@ namespace ProtoRpg {
   /// <summary>
   /// A camera with orthographic projection.
   /// </summary>
-  public class Camera {
+  public class Camera : IDisposable {
     private GraphicsDevice graphicsDevice;
     public Vector2 Position { get; set; }
     public Vector2 Origin { get; set; }
@@ -14,8 +14,8 @@ namespace ProtoRpg {
 
     public Viewport Viewport { get { return this.graphicsDevice.Viewport; } } 
 
-    int VirtualWidth;
-    int VirtualHeight;
+    private int VirtualWidth;
+    private int VirtualHeight;
 
     public Camera(GraphicsDevice graphicsDevice, int VirtualWidth, int VirtualHeight) {
       this.graphicsDevice = graphicsDevice;
@@ -48,6 +48,14 @@ namespace ProtoRpg {
         Matrix.CreateScale(scaleX, scaleY, 1.0f) *
         Matrix.CreateTranslation(new Vector3(Origin, 0.0f)); 
     }
+
+    #region IDisposable implementation
+
+    public void Dispose() {
+      graphicsDevice = null;
+    }
+
+    #endregion
   }
 }
 

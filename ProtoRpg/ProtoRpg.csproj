@@ -54,6 +54,14 @@
     </Compile>
     <Compile Include="Core\Utils\XmlManager.cs" />
     <Compile Include="Core\Graphics\Camera.cs" />
+    <Compile Include="Core\Utils\Log.cs" />
+    <Compile Include="Core\Map\Map.cs" />
+    <Compile Include="Core\Map\Layer.cs" />
+    <Compile Include="Core\Map\Tileset.cs" />
+    <Compile Include="Core\Map\Tile.cs" />
+    <Compile Include="Core\Map\MapManager.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
@@ -63,12 +71,21 @@
     <None Include="Content\debug_player.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\grass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Tileset\forest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Tileset\town.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Tileset\000_forest.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="OpenTK.dll.config">
@@ -81,5 +98,6 @@
     <Folder Include="Core\" />
     <Folder Include="Core\Utils\" />
     <Folder Include="Core\Graphics\" />
+    <Folder Include="Core\Map\" />
   </ItemGroup>
 </Project>

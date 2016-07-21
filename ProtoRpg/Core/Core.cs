@@ -4,19 +4,26 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace ProtoRpg {
   /// <summary>
   /// This is the main type for your game.
   /// </summary>
   public class Core : Game {
+    const string TAG = "Core";
+
+    MapManager mapLoader;
+
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     Config config;
     Camera camera;
     Texture2D player;
+    Texture2D gTileTexture;
 
     public Core(Config config) {
+      Log.Info(TAG, "Initializing...");
       this.config = config;
       graphics = new GraphicsDeviceManager(this);
 
@@ -35,6 +42,7 @@ namespace ProtoRpg {
     /// </summary>
     protected override void Initialize() {
       base.Initialize();
+      mapLoader = new MapManager(Content.RootDirectory); 
       camera = new Camera(GraphicsDevice, this.config.VirtualWidth, this.config.VirtualHeight);
     }
 
@@ -43,15 +51,20 @@ namespace ProtoRpg {
     /// all of your content.
     /// </summary>
     protected override void LoadContent() {
+      Log.Info(TAG, "Loading content...");
       // Create a new SpriteBatch, which can be used to draw textures.
       spriteBatch = new SpriteBatch(GraphicsDevice);
       player = Content.Load<Texture2D>("debug_player.png");
+      gTileTexture = Content.Load<Texture2D>("grass.png");
       //TODO: use this.Content to load your game content here 
     }
 
     protected override void UnloadContent() {
+      mapLoader.Dispose();
       Content.Unload();
       base.UnloadContent();
+      camera.Dispose();
+
     }
 
     /// <summary>
@@ -78,12 +91,21 @@ namespace ProtoRpg {
     /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Draw(GameTime gameTime) {
       graphics.GraphicsDevice.Clear(Color.Black);
-      camera.Position += new Vector2(-1, -1);
+      //camera.Position += new Vector2(-1, -1);
       camera.Update();
-      //TODO: Add your drawing code here
+
+      int Rows = this.config.Rows;
+      int Cols = this.config.Columns;
+
       spriteBatch.Begin(transformMatrix: camera.View, samplerState: SamplerState.PointClamp); {
-        spriteBatch.Draw(player, Vector2.Zero);
+        for (int x = -10; x < Cols; x++) {
+          for (int y = -10; y < Rows; y++) {
+            Vector2 worldPosition = new Vector2(x, y) * config.TileSize;
+            spriteBatch.Draw(gTileTexture, worldPosition);
+          }
+        }
       } spriteBatch.End();
+
       base.Draw(gameTime);
     }
   }

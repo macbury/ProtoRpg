@@ -14,9 +14,30 @@ namespace ProtoRpg {
     public int VirtualWidth;
     public int VirtualHeight;
 
+    public int TileSize;
+
+    /// <summary>
+    /// Number of tiles that can fit horizontaly
+    /// </summary>
+    /// <value>The columns.</value>
+    public int Columns {
+      get {
+        return (int)Math.Ceiling(Convert.ToDouble(VirtualWidth / TileSize)) + 1;
+      }
+    }
+
+    /// <summary>
+    /// Numbers of tiles that can fit veriticaly
+    /// </summary>
+    /// <value>The rows.</value>
+    public int Rows {
+      get {
+        return (int)Math.Ceiling(Convert.ToDouble(VirtualHeight / TileSize));
+      }
+    }
+
     public static Config Load() {
-      XmlManager<Config> xml = new XmlManager<Config>();
-      return xml.Load("./config.xml");
+      return XmlManager<Config>.Load("./config.xml");
     }
   }
 }
