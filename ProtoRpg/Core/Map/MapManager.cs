@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ProtoRpg {
   /// <summary>
@@ -10,15 +11,15 @@ namespace ProtoRpg {
   /// </summary>
   public class MapManager : IDisposable {
     private const string TILESET_DIR = "Tileset"; 
-    private string RootDirectory;
     private Dictionary<string, Tileset> tilesets;
     private ContentManager contentManager;
+    public Tileset CurrentTileset { get; private set; }
 
     const string TAG = "MapManager";
 
     public MapManager(ContentManager contentManager) {
-      this.contentManager = contentManager;
-      this.RootDirectory = Path.GetFullPath(contentManager.RootDirectory);
+      this.contentManager = new ContentManager(contentManager.ServiceProvider, contentManager.RootDirectory);
+
       tilesets = new Dictionary<string, Tileset>();
 
       this.loadTilesetInformation();
@@ -41,12 +42,14 @@ namespace ProtoRpg {
     private void loadTilesetInformation() {
       tilesets.Clear();
 
-      var tilesetsXmlPaths = Directory.GetFiles(Path.Combine(RootDirectory, TILESET_DIR), "*.xml");
+      var tilesetsXmlPaths = Directory.GetFiles(Path.Combine(contentManager.RootDirectory, TILESET_DIR), "*.xml");
+
       foreach (var tilesetXmlPath in tilesetsXmlPaths) {
         Log.Info(TAG, "Found: " + tilesetXmlPath);
         string tilesetName = Path.GetFileNameWithoutExtension(tilesetXmlPath);
         Tileset tileset    = XmlManager<Tileset>.Load(tilesetXmlPath);
         tileset.Name = tilesetName;
+        tileset.Load();
         tilesets.Add(tilesetName, tileset);
       }
     }
@@ -63,6 +66,32 @@ namespace ProtoRpg {
 
     #endregion
 
+    #region Map managment
+    /// <summary>
+    /// Load map and its assets into memory
+    /// </summary>
+    /// <param name="mapName">Map name.</param>
+    public void LoadMap(string mapName) {
+      Log.Info(TAG, "Loading map");
+
+      UnloadMap();
+      CurrentTileset           = GetTileset("000_forest");
+      Texture2D tilesetTexture = contentManager.Load<Texture2D>(Path.Combine(TILESET_DIR, CurrentTileset.TextureName));
+      CurrentTileset.Texture   = tilesetTexture;
+    }
+
+    /// <summary>
+    /// Unloads current map and its resources.
+    /// </summary>
+    public void UnloadMap() {
+      contentManager.Unload();
+
+      if (CurrentTileset != null) {
+        CurrentTileset.Texture = null;
+      }
+    }
+    #endregion
+
     #region IDisposable implementation
 
     /// <summary>
@@ -77,6 +106,7 @@ namespace ProtoRpg {
         tileset.Value.Dispose();
       }
       tilesets.Clear();
+      contentManager.Dispose();
     }
 
     #endregion

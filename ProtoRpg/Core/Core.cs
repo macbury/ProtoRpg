@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using System.IO;
 
 namespace ProtoRpg {
   /// <summary>
@@ -32,6 +33,7 @@ namespace ProtoRpg {
       graphics.PreferredBackBufferHeight = this.config.Height;
 
       Content.RootDirectory = "Content";
+      mapLoader = new MapManager(Content); 
     }
 
     /// <summary>
@@ -42,7 +44,6 @@ namespace ProtoRpg {
     /// </summary>
     protected override void Initialize() {
       base.Initialize();
-      mapLoader = new MapManager(Content); 
       camera = new Camera(GraphicsDevice, this.config.VirtualWidth, this.config.VirtualHeight);
     }
 
@@ -56,6 +57,9 @@ namespace ProtoRpg {
       spriteBatch = new SpriteBatch(GraphicsDevice);
       player = Content.Load<Texture2D>("debug_player.png");
       gTileTexture = Content.Load<Texture2D>("grass.png");
+
+      mapLoader.LoadMap("hello_world");
+
       //TODO: use this.Content to load your game content here 
     }
 
@@ -64,7 +68,6 @@ namespace ProtoRpg {
       Content.Unload();
       base.UnloadContent();
       camera.Dispose();
-
     }
 
     /// <summary>
@@ -101,9 +104,15 @@ namespace ProtoRpg {
         for (int x = -10; x < Cols; x++) {
           for (int y = -10; y < Rows; y++) {
             Vector2 worldPosition = new Vector2(x, y) * config.TileSize;
-            spriteBatch.Draw(gTileTexture, worldPosition);
+            spriteBatch.Draw(
+              mapLoader.CurrentTileset.Texture,
+              worldPosition,
+              new Rectangle(new Point(0,9*16), new Point(16,16)),
+              Color.White
+            );
           }
         }
+
       } spriteBatch.End();
 
       base.Draw(gameTime);

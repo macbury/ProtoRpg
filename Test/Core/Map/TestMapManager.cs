@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Content;
 using NUnit.Framework;
 using ProtoRpg;
+using Microsoft.Xna.Framework;
 
 namespace Test {
   [TestFixture()]
@@ -11,7 +12,9 @@ namespace Test {
 
     [SetUp()]
     public void SetUp() {
-      mapManager = new MapManager(new ContentManager(new GameServiceContainer()));
+      var contentManager = new ContentManager(new GameServiceContainer());
+      contentManager.RootDirectory = "./Fixtures";
+      mapManager = new MapManager(contentManager);
     }
 
     [Test()]
@@ -29,6 +32,7 @@ namespace Test {
       Assert.AreEqual(tileset.Name, "001_town");
       Assert.IsNotNull(tileset);
     }
+
   }
 }
 
