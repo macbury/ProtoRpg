@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Tileset>
+	<Width>21</Width>
+	<Height>39</Height>
+	<TextureName>Floor.png</TextureName>
+</Tileset>

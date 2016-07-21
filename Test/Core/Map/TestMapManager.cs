@@ -14,7 +14,7 @@ namespace Test {
     public void SetUp() {
       var contentManager = new ContentManager(new GameServiceContainer());
       contentManager.RootDirectory = "./Fixtures";
-      mapManager = new MapManager(contentManager);
+      mapManager = new MapManager(contentManager, 16);
     }
 
     [Test()]
@@ -33,6 +33,31 @@ namespace Test {
       Assert.IsNotNull(tileset);
     }
 
+    [Test()]
+    public void ItShouldGenerateTilesOnStart() {
+      Tileset tileset = mapManager.GetTileset("000_forest");
+      Assert.AreEqual(480, tileset.TileCount);
+
+      Tile firstTile = tileset[0];
+
+      Assert.IsNotNull(firstTile);
+      Assert.AreEqual(0, firstTile.Id);
+
+      Tile secondTile = tileset[1];
+      Assert.AreEqual(1, secondTile.Id);
+
+      Tileset secondTileset = mapManager.GetTileset("001_town");
+
+      firstTile = secondTileset[0];
+      Assert.IsNotNull(firstTile);
+      Assert.AreEqual(480, firstTile.Id);
+    }
+
+    [Test()]
+    [ExpectedException(typeof(TilesetNotFound))]
+    public void ItShouldDropMoreNiceExceptionIfPassedNonExistingTilesetName() {
+      mapManager.GetTileset("234324_thisnotexiststt");
+    }
   }
 }
 

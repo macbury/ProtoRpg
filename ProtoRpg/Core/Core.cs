@@ -20,8 +20,6 @@ namespace ProtoRpg {
     SpriteBatch spriteBatch;
     Config config;
     Camera camera;
-    Texture2D player;
-    Texture2D gTileTexture;
 
     public Core(Config config) {
       Log.Info(TAG, "Initializing...");
@@ -31,9 +29,11 @@ namespace ProtoRpg {
       // Configure resolution
       graphics.PreferredBackBufferWidth  = this.config.Width;
       graphics.PreferredBackBufferHeight = this.config.Height;
+      graphics.SynchronizeWithVerticalRetrace = true;
+      graphics.IsFullScreen = false;
 
       Content.RootDirectory = "Content";
-      mapLoader = new MapManager(Content); 
+      mapLoader = new MapManager(Content, config.TileSize); 
     }
 
     /// <summary>
@@ -55,8 +55,6 @@ namespace ProtoRpg {
       Log.Info(TAG, "Loading content...");
       // Create a new SpriteBatch, which can be used to draw textures.
       spriteBatch = new SpriteBatch(GraphicsDevice);
-      player = Content.Load<Texture2D>("debug_player.png");
-      gTileTexture = Content.Load<Texture2D>("grass.png");
 
       mapLoader.LoadMap("hello_world");
 
@@ -94,20 +92,21 @@ namespace ProtoRpg {
     /// <param name="gameTime">Provides a snapshot of timing values.</param>
     protected override void Draw(GameTime gameTime) {
       graphics.GraphicsDevice.Clear(Color.Black);
-      //camera.Position += new Vector2(-1, -1);
+      //camera.Position = new Vector2(-16, -16);
+
       camera.Update();
 
       int Rows = this.config.Rows;
       int Cols = this.config.Columns;
 
       spriteBatch.Begin(transformMatrix: camera.View, samplerState: SamplerState.PointClamp); {
-        for (int x = -10; x < Cols; x++) {
-          for (int y = -10; y < Rows; y++) {
+        for (int x = 0; x < Cols; x++) {
+          for (int y = 0; y < Rows; y++) {
             Vector2 worldPosition = new Vector2(x, y) * config.TileSize;
             spriteBatch.Draw(
               mapLoader.CurrentTileset.Texture,
               worldPosition,
-              new Rectangle(new Point(0,9*16), new Point(16,16)),
+              new Rectangle(new Point(4*16,10*16), new Point(16,16)),
               Color.White
             );
           }

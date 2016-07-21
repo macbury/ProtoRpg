@@ -17,9 +17,11 @@ namespace ProtoRpg {
 
     const string TAG = "MapManager";
 
-    public MapManager(ContentManager contentManager) {
-      this.contentManager = new ContentManager(contentManager.ServiceProvider, contentManager.RootDirectory);
+    int TileSize;
 
+    public MapManager(ContentManager contentManager, int TileSize) {
+      this.contentManager = new ContentManager(contentManager.ServiceProvider, contentManager.RootDirectory);
+      this.TileSize = TileSize;
       tilesets = new Dictionary<string, Tileset>();
 
       this.loadTilesetInformation();
@@ -33,7 +35,11 @@ namespace ProtoRpg {
     /// <returns>The tileset.</returns>
     /// <param name="name">name of tileset.</param>
     public Tileset GetTileset(string name) {
-      return tilesets[name];
+      if (tilesets.ContainsKey(name)) {
+        return tilesets[name];
+      } else {
+        throw new TilesetNotFound(name);
+      }
     }
 
     /// <summary>
@@ -43,13 +49,14 @@ namespace ProtoRpg {
       tilesets.Clear();
 
       var tilesetsXmlPaths = Directory.GetFiles(Path.Combine(contentManager.RootDirectory, TILESET_DIR), "*.xml");
-
+      int gidOffset = 0;
       foreach (var tilesetXmlPath in tilesetsXmlPaths) {
         Log.Info(TAG, "Found: " + tilesetXmlPath);
         string tilesetName = Path.GetFileNameWithoutExtension(tilesetXmlPath);
         Tileset tileset    = XmlManager<Tileset>.Load(tilesetXmlPath);
         tileset.Name = tilesetName;
-        tileset.Load();
+        tileset.Load(TileSize, gidOffset);
+        gidOffset += tileset.TileCount;
         tilesets.Add(tilesetName, tileset);
       }
     }
@@ -72,10 +79,10 @@ namespace ProtoRpg {
     /// </summary>
     /// <param name="mapName">Map name.</param>
     public void LoadMap(string mapName) {
-      Log.Info(TAG, "Loading map");
+      Log.Info(TAG, "Loading map: " + mapName);
 
       UnloadMap();
-      CurrentTileset           = GetTileset("000_forest");
+      CurrentTileset           = GetTileset("000_Floor");
       Texture2D tilesetTexture = contentManager.Load<Texture2D>(Path.Combine(TILESET_DIR, CurrentTileset.TextureName));
       CurrentTileset.Texture   = tilesetTexture;
     }

@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace ProtoRpg {
+
+  public class TilesetNotFound : Exception {
+    public TilesetNotFound(string tilesetName) : base("Could not find map: " + tilesetName) {}
+  }
+
   /// <summary>
   /// This class defines tileset texture atlas with all tiles
   /// </summary>
@@ -15,14 +21,18 @@ namespace ProtoRpg {
     /// Tile count veriticaly.
     /// </summary>
     public int Height;
-
     /// <summary>
     /// Name taken from file name without extension
     /// </summary>
     [XmlIgnoreAttribute]
     public string Name;
-
+    /// <summary>
+    /// The name of the texture.
+    /// </summary>
     public string TextureName;
+
+    public List<Tile> Tiles;
+
     /// <summary>
     /// Texture for current tileset
     /// </summary>
@@ -30,9 +40,11 @@ namespace ProtoRpg {
     public Texture2D Texture;
 
     [XmlIgnoreAttribute]
+    public int TileSize;
+
+    [XmlIgnoreAttribute]
     public int TileCount {
-      get;
-      private set;
+      get { return Tiles.Count; }
     }
 
     public Tileset() {
@@ -42,8 +54,27 @@ namespace ProtoRpg {
     /// <summary>
     /// Load information about tileset and calculate tileset gids.
     /// </summary>
-    public void Load() {
-      TileCount = (Width * Height);
+    public void Load(int tileSize, int gidOffset) {
+      TileSize  = tileSize;
+
+      if (Tiles == null || Tiles.Count == 0) {
+        Tiles = new List<Tile>(); 
+
+        int gid = gidOffset;
+        for (int col = 0; col < Width; col++) {
+          for (int row = 0; row < Height; row++) {
+            var tile = new Tile() { Id = gid++ };
+            Tiles.Add(tile);
+          }
+        }
+      }
+
+    }
+
+    public Tile this[int i] {
+      get {
+        return Tiles[i];
+      }
     }
 
     #region IDisposable implementation
