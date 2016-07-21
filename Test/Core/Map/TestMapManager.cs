@@ -42,9 +42,11 @@ namespace Test {
 
       Assert.IsNotNull(firstTile);
       Assert.AreEqual(0, firstTile.Id);
+      Assert.AreEqual(new Rectangle(0,0 ,16,16), firstTile.Rect);
 
       Tile secondTile = tileset[1];
       Assert.AreEqual(1, secondTile.Id);
+      Assert.AreEqual(new Rectangle(0,16 ,16,16), secondTile.Rect);
 
       Tileset secondTileset = mapManager.GetTileset("001_town");
 

@@ -2,6 +2,7 @@
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace ProtoRpg {
 
@@ -40,7 +41,7 @@ namespace ProtoRpg {
     public Texture2D Texture;
 
     [XmlIgnoreAttribute]
-    public int TileSize;
+    public Point TileSize;
 
     [XmlIgnoreAttribute]
     public int TileCount {
@@ -55,7 +56,7 @@ namespace ProtoRpg {
     /// Load information about tileset and calculate tileset gids.
     /// </summary>
     public void Load(int tileSize, int gidOffset) {
-      TileSize  = tileSize;
+      TileSize  = new Point(tileSize, tileSize);
 
       if (Tiles == null || Tiles.Count == 0) {
         Tiles = new List<Tile>(); 
@@ -63,7 +64,9 @@ namespace ProtoRpg {
         int gid = gidOffset;
         for (int col = 0; col < Width; col++) {
           for (int row = 0; row < Height; row++) {
-            var tile = new Tile() { Id = gid++ };
+            var tile       = new Tile() { Id = gid++ };
+            var tileOffset = new Point(col, row) * TileSize;
+            tile.Rect      = new Rectangle(tileOffset, TileSize);
             Tiles.Add(tile);
           }
         }
