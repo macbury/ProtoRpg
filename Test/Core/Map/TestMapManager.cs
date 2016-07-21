@@ -1,7 +1,8 @@
 ﻿using System;
+using System.IO;
+using Microsoft.Xna.Framework.Content;
 using NUnit.Framework;
 using ProtoRpg;
-using System.IO;
 
 namespace Test {
   [TestFixture()]
@@ -10,7 +11,7 @@ namespace Test {
 
     [SetUp()]
     public void SetUp() {
-      mapManager = new MapManager("./Fixtures");
+      mapManager = new MapManager(new ContentManager(new GameServiceContainer()));
     }
 
     [Test()]

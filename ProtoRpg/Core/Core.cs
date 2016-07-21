@@ -42,7 +42,7 @@ namespace ProtoRpg {
     /// </summary>
     protected override void Initialize() {
       base.Initialize();
-      mapLoader = new MapManager(Content.RootDirectory); 
+      mapLoader = new MapManager(Content); 
       camera = new Camera(GraphicsDevice, this.config.VirtualWidth, this.config.VirtualHeight);
     }
 

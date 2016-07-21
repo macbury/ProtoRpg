@@ -12,11 +12,13 @@ namespace ProtoRpg {
     private const string TILESET_DIR = "Tileset"; 
     private string RootDirectory;
     private Dictionary<string, Tileset> tilesets;
+    private ContentManager contentManager;
 
     const string TAG = "MapManager";
 
-    public MapManager(string RootDirectory) {
-      this.RootDirectory = Path.GetFullPath(RootDirectory);
+    public MapManager(ContentManager contentManager) {
+      this.contentManager = contentManager;
+      this.RootDirectory = Path.GetFullPath(contentManager.RootDirectory);
       tilesets = new Dictionary<string, Tileset>();
 
       this.loadTilesetInformation();
