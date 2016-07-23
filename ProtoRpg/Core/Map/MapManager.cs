@@ -74,6 +74,7 @@ namespace ProtoRpg {
         tileset.Load(TileSize, gidOffset);
         gidOffset += tileset.TileCount;
         tilesets.Add(tilesetName, tileset);
+
         tiles.AddRange(tileset.Tiles);
       }
     }

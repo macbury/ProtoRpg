@@ -98,12 +98,14 @@ namespace ProtoRpg {
 
       int Rows = this.config.Rows;
       int Cols = this.config.Columns;
+      int i = 0;
 
-      spriteBatch.Begin(transformMatrix: camera.View, samplerState: SamplerState.PointClamp); {
+      //TODO Draw map and events in here!
+      spriteBatch.Begin(transformMatrix: camera.View, samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.BackToFront); {
         for (int x = 0; x < Cols; x++) {
           for (int y = 0; y < Rows; y++) {
             Vector2 tilePosition = new Vector2(x, y);
-            mapManager.GetTile(x).Draw(spriteBatch, tilePosition);
+            mapManager.GetTile(i++).Draw(spriteBatch, tilePosition);
           }
         }
 

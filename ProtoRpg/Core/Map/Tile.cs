@@ -1,8 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Xml.Serialization;
 
 namespace ProtoRpg {
+  enum Location {
+    BelowEvents, AboveEvent
+  }
+
   public class Tile {
     /// <summary>
     /// Unique id of tile in all tilesets
@@ -13,8 +18,9 @@ namespace ProtoRpg {
     /// </summary>
     public Rectangle Rect;
 
+    [XmlIgnoreAttribute]
     public Tileset Tileset {
-      get;
+      private get;
       set;
     }
 

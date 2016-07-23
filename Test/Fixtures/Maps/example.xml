@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Map>
+	<Width>10</Width>
+	<Height>10</Height>
+	<Name>Example map</Name>
+	<Tilesets>
+		<Tileset>001_town</Tileset>
+		<Tileset>000_forest</Tileset>
+	</Tilesets>
+	<Floor></Floor>
+	<Decoration></Decoration>
+	<Events></Events>
+</Map>
