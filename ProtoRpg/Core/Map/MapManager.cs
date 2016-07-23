@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections;
 
 namespace ProtoRpg {
   /// <summary>
@@ -12,6 +13,7 @@ namespace ProtoRpg {
   public class MapManager : IDisposable {
     private const string TILESET_DIR = "Tileset"; 
     private Dictionary<string, Tileset> tilesets;
+    private List<Tile> tiles;
     private ContentManager contentManager;
     public Tileset CurrentTileset { get; private set; }
 
@@ -22,12 +24,25 @@ namespace ProtoRpg {
     public MapManager(ContentManager contentManager, int TileSize) {
       this.contentManager = new ContentManager(contentManager.ServiceProvider, contentManager.RootDirectory);
       this.TileSize = TileSize;
+      this.tiles    = new List<Tile>();
       tilesets = new Dictionary<string, Tileset>();
 
       this.loadTilesetInformation();
     }
 
     #region Tileset
+
+    /// <summary>
+    /// Find tile by its id
+    /// </summary>
+    /// <returns>The tile.</returns>
+    /// <param name="gid">Gid.</param>
+    public Tile GetTile(int gid) {
+      if (gid < 0 || gid > this.tiles.Count) {
+        throw new TileNotFound(gid);
+      }
+      return this.tiles[gid];
+    }
 
     /// <summary>
     /// Finds tileset by name
@@ -47,6 +62,7 @@ namespace ProtoRpg {
     /// </summary>
     private void loadTilesetInformation() {
       tilesets.Clear();
+      tiles.Clear();
 
       var tilesetsXmlPaths = Directory.GetFiles(Path.Combine(contentManager.RootDirectory, TILESET_DIR), "*.xml");
       int gidOffset = 0;
@@ -58,6 +74,7 @@ namespace ProtoRpg {
         tileset.Load(TileSize, gidOffset);
         gidOffset += tileset.TileCount;
         tilesets.Add(tilesetName, tileset);
+        tiles.AddRange(tileset.Tiles);
       }
     }
 

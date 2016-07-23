@@ -14,7 +14,7 @@ namespace ProtoRpg {
   public class Core : Game {
     const string TAG = "Core";
 
-    MapManager mapLoader;
+    MapManager mapManager;
 
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
@@ -33,7 +33,7 @@ namespace ProtoRpg {
       graphics.IsFullScreen = false;
 
       Content.RootDirectory = "Content";
-      mapLoader = new MapManager(Content, config.TileSize); 
+      mapManager = new MapManager(Content, config.TileSize); 
     }
 
     /// <summary>
@@ -56,13 +56,13 @@ namespace ProtoRpg {
       // Create a new SpriteBatch, which can be used to draw textures.
       spriteBatch = new SpriteBatch(GraphicsDevice);
 
-      mapLoader.LoadMap("hello_world");
+      mapManager.LoadMap("hello_world");
 
       //TODO: use this.Content to load your game content here 
     }
 
     protected override void UnloadContent() {
-      mapLoader.Dispose();
+      mapManager.Dispose();
       Content.Unload();
       base.UnloadContent();
       camera.Dispose();
@@ -102,13 +102,8 @@ namespace ProtoRpg {
       spriteBatch.Begin(transformMatrix: camera.View, samplerState: SamplerState.PointClamp); {
         for (int x = 0; x < Cols; x++) {
           for (int y = 0; y < Rows; y++) {
-            Vector2 worldPosition = new Vector2(x, y) * config.TileSize;
-            spriteBatch.Draw(
-              mapLoader.CurrentTileset.Texture,
-              worldPosition,
-              new Rectangle(new Point(4*16,10*16), new Point(16,16)),
-              Color.White
-            );
+            Vector2 tilePosition = new Vector2(x, y);
+            mapManager.GetTile(x).Draw(spriteBatch, tilePosition);
           }
         }
 

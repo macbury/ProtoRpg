@@ -50,15 +50,36 @@ namespace Test {
 
       Tileset secondTileset = mapManager.GetTileset("001_town");
 
-      firstTile = secondTileset[0];
+      firstTile = secondTileset[500];
       Assert.IsNotNull(firstTile);
-      Assert.AreEqual(480, firstTile.Id);
+      Assert.AreEqual(500, firstTile.Id);
     }
 
     [Test()]
     [ExpectedException(typeof(TilesetNotFound))]
     public void ItShouldDropMoreNiceExceptionIfPassedNonExistingTilesetName() {
       mapManager.GetTileset("234324_thisnotexiststt");
+    }
+
+    [Test()]
+    [ExpectedException(typeof(TileNotFound))]
+    public void ItShouldThrowExceptionIfITryToGetNotExistingTileFromTileset() {
+      Tileset tileset = mapManager.GetTileset("001_town");
+      Tile tile = tileset[1000];
+    }
+
+    [Test()]
+    [ExpectedException(typeof(TileNotFound))]
+    public void ItShouldThrowExceptionIfITryToGetNotExistingTileFromMapLoader() {
+      Tile tile = mapManager.GetTile(1000);
+    }
+
+    [Test()]
+    public void MapLoaderShouldReturnTheSameTileAsTileset() {
+      Tileset tileset = mapManager.GetTileset("001_town");
+      Assert.AreSame(mapManager.GetTile(500).Tileset, tileset);
+      Assert.AreSame(tileset[500], mapManager.GetTile(500));
+      Assert.AreSame(tileset[480], mapManager.GetTile(480));
     }
   }
 }
