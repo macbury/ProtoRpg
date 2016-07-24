@@ -287,8 +287,9 @@
                                     <property name="LeftAttach">2</property>
                                     <property name="RightAttach">3</property>
                                     <property name="AutoSize">True</property>
+                                    <property name="XOptions">Fill</property>
                                     <property name="YOptions">Fill</property>
-                                    <property name="XExpand">True</property>
+                                    <property name="XExpand">False</property>
                                     <property name="XFill">True</property>
                                     <property name="XShrink">False</property>
                                     <property name="YExpand">False</property>
@@ -419,7 +420,7 @@
                         <property name="Orientation">Vertical</property>
                         <property name="ShowArrow">False</property>
                         <property name="ButtonStyle">Text</property>
-                        <node name="__gtksharp_80_Stetic_Editor_ActionToolbar" type="Toolbar">
+                        <node name="toolbar1" type="Toolbar">
                           <node type="Toolitem" action="PassageAction" />
                           <node type="Toolitem" action="priorityAction" />
                         </node>
@@ -493,6 +494,13 @@
           </packing>
         </child>
       </widget>
+    </child>
+  </widget>
+  <widget class="Gtk.Bin" id="Editor.TilesetEditorWidget" design-size="300 300">
+    <property name="MemberName" />
+    <property name="Visible">False</property>
+    <child>
+      <placeholder />
     </child>
   </widget>
 </stetic-interface>

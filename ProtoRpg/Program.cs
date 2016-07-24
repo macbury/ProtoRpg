@@ -13,7 +13,7 @@ using UIKit;
 #endif
 #endregion
 
-namespace ProtoRpg {
+namespace MonoRPG {
   #if __IOS__ || __TVOS__
     [Register("AppDelegate")]
     class Program : UIApplicationDelegate

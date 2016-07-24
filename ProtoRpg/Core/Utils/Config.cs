@@ -1,7 +1,7 @@
 ﻿using System;
-using ProtoRpg;
+using MonoRPG;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   /// <summary>
   /// This class loads configurtion from config file.
   /// </summary>

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using System.IO;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   /// <summary>
   /// This is the main type for your game.
   /// </summary>

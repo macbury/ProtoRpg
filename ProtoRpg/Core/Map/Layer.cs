@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   public class Layer<T> : IDisposable {
     private T[,] tiles;
 

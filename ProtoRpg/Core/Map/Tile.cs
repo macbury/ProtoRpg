@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml.Serialization;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   enum Location {
     BelowEvents, AboveEvent
   }
@@ -20,7 +20,7 @@ namespace ProtoRpg {
 
     [XmlIgnoreAttribute]
     public Tileset Tileset {
-      private get;
+      get;
       set;
     }
 

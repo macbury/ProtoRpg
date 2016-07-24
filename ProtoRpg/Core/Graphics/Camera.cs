@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   /// <summary>
   /// A camera with orthographic projection.
   /// </summary>

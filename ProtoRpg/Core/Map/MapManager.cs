@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   /// <summary>
   /// This class contains list of all maps, and tilesets
   /// </summary>

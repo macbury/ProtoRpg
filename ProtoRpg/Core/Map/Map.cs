@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   public class Map : IDisposable {
     /// <summary>
     /// This layer contains all floor stuff like gras, dirt, sand or water. This is always drawed first

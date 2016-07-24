@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace ProtoRpg {
+namespace MonoRPG {
   /// <summary>
   /// This class helps load xml file and deserialize it to object
   /// </summary>

@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.Xna.Framework.Content;
 using NUnit.Framework;
-using ProtoRpg;
+using MonoRPG;
 using Microsoft.Xna.Framework;
 
 namespace Test {

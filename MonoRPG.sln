@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtoRpg", "ProtoRpg\ProtoRpg.csproj", "{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "ProtoRpg\Game.csproj", "{F5B9E9AE-C5FE-4F3C-9074-EBA8FA94F0E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A6185E4D-8113-4D8E-9E4B-FD69F4ED644F}"
 EndProject
