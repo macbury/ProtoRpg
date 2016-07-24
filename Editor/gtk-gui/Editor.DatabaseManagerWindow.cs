@@ -48,7 +48,7 @@ namespace Editor
 		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
 		
-		private global::Gtk.NodeView nodeview1;
+		private global::Editor.TilesetEditorWidget tileseteditorwidget3;
 		
 		private global::Gtk.Toolbar toolbar1;
 		
@@ -223,13 +223,17 @@ namespace Editor
 			this.scrolledwindow1.Name = "scrolledwindow1";
 			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child scrolledwindow1.Gtk.Container+ContainerChild
-			this.nodeview1 = new global::Gtk.NodeView ();
-			this.nodeview1.CanFocus = true;
-			this.nodeview1.Name = "nodeview1";
-			this.scrolledwindow1.Add (this.nodeview1);
+			global::Gtk.Viewport w15 = new global::Gtk.Viewport ();
+			w15.ShadowType = ((global::Gtk.ShadowType)(0));
+			// Container child GtkViewport.Gtk.Container+ContainerChild
+			this.tileseteditorwidget3 = new global::Editor.TilesetEditorWidget ();
+			this.tileseteditorwidget3.Events = ((global::Gdk.EventMask)(256));
+			this.tileseteditorwidget3.Name = "tileseteditorwidget3";
+			w15.Add (this.tileseteditorwidget3);
+			this.scrolledwindow1.Add (w15);
 			this.hbox1.Add (this.scrolledwindow1);
-			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.scrolledwindow1]));
-			w16.Position = 1;
+			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.scrolledwindow1]));
+			w18.Position = 1;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='PassageAction' action='PassageAction'/><toolitem name='priorityAction' action='priorityAction'/></toolbar></ui>");
 			this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
@@ -238,10 +242,10 @@ namespace Editor
 			this.toolbar1.ShowArrow = false;
 			this.toolbar1.ToolbarStyle = ((global::Gtk.ToolbarStyle)(1));
 			this.hbox1.Add (this.toolbar1);
-			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.toolbar1]));
-			w17.Position = 2;
-			w17.Expand = false;
-			w17.Fill = false;
+			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.toolbar1]));
+			w19.Position = 2;
+			w19.Expand = false;
+			w19.Fill = false;
 			this.hpaned1.Add (this.hbox1);
 			this.notebook1.Add (this.hpaned1);
 			// Notebook tab
@@ -251,14 +255,14 @@ namespace Editor
 			this.notebook1.SetTabLabel (this.hpaned1, this.tilesetsPage);
 			this.tilesetsPage.ShowAll ();
 			w2.Add (this.notebook1);
-			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(w2 [this.notebook1]));
-			w20.Position = 0;
+			global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(w2 [this.notebook1]));
+			w22.Position = 0;
 			// Internal child Editor.DatabaseManagerWindow.ActionArea
-			global::Gtk.HButtonBox w21 = this.ActionArea;
-			w21.Name = "dialog1_ActionArea";
-			w21.Spacing = 10;
-			w21.BorderWidth = ((uint)(5));
-			w21.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+			global::Gtk.HButtonBox w23 = this.ActionArea;
+			w23.Name = "dialog1_ActionArea";
+			w23.Spacing = 10;
+			w23.BorderWidth = ((uint)(5));
+			w23.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonCancel = new global::Gtk.Button ();
 			this.buttonCancel.CanDefault = true;
@@ -268,9 +272,9 @@ namespace Editor
 			this.buttonCancel.UseUnderline = true;
 			this.buttonCancel.Label = "gtk-cancel";
 			this.AddActionWidget (this.buttonCancel, -6);
-			global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w21 [this.buttonCancel]));
-			w22.Expand = false;
-			w22.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w24 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w23 [this.buttonCancel]));
+			w24.Expand = false;
+			w24.Fill = false;
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
 			this.buttonOk = new global::Gtk.Button ();
 			this.buttonOk.CanDefault = true;
@@ -280,10 +284,10 @@ namespace Editor
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
 			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w23 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w21 [this.buttonOk]));
-			w23.Position = 1;
-			w23.Expand = false;
-			w23.Fill = false;
+			global::Gtk.ButtonBox.ButtonBoxChild w25 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w23 [this.buttonOk]));
+			w25.Position = 1;
+			w25.Expand = false;
+			w25.Fill = false;
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

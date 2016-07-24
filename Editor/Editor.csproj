@@ -59,6 +59,7 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cairo" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

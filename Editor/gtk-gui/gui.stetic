@@ -403,9 +403,15 @@
                         <property name="CanFocus">True</property>
                         <property name="ShadowType">In</property>
                         <child>
-                          <widget class="Gtk.NodeView" id="nodeview1">
+                          <widget class="Gtk.Viewport" id="GtkViewport">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
+                            <property name="ShadowType">None</property>
+                            <child>
+                              <widget class="Editor.TilesetEditorWidget" id="tileseteditorwidget3">
+                                <property name="MemberName" />
+                                <property name="Events">ButtonPressMask</property>
+                              </widget>
+                            </child>
                           </widget>
                         </child>
                       </widget>
