@@ -17,6 +17,7 @@ namespace Test {
       Assert.IsNotNull(dummy);
       Assert.AreEqual(dummy.ValueToLoad, 10);
     }
+
   }
 }
 

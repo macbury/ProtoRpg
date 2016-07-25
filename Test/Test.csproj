@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Core\Utils\TestXmlManager.cs" />
     <Compile Include="Core\Map\TestMapManager.cs" />
+    <Compile Include="Core\Map\TestTilesets.cs" />
+    <Compile Include="Core\Map\TestTileset.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -59,6 +61,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Fixtures\Maps\example.xml" />
+    <None Include="Fixtures\Tilesets.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />

@@ -18,6 +18,12 @@ namespace MonoRPG {
   /// This class defines tileset texture atlas with all tiles
   /// </summary>
   public class Tileset : IDisposable {
+    private const int TILES_PER_ID = 1000;
+
+    /// <summary>
+    /// Unique id of tileset
+    /// </summary>
+    public int Id;
     /// <summary>
     /// Tile count horizontal
     /// </summary>
@@ -29,7 +35,6 @@ namespace MonoRPG {
     /// <summary>
     /// Name taken from file name without extension
     /// </summary>
-    [XmlIgnoreAttribute]
     public string Name;
     /// <summary>
     /// The name of the texture.
@@ -49,7 +54,11 @@ namespace MonoRPG {
     [XmlIgnoreAttribute]
     public Vector2 TileSize;
     [XmlIgnoreAttribute]
-    public int StartGidOffset;
+    public int StartGidOffset {
+      get {
+        return Id * TILES_PER_ID;
+      }
+    }
 
     [XmlIgnoreAttribute]
     public int TileCount {
@@ -70,7 +79,7 @@ namespace MonoRPG {
         Tiles = new List<Tile>(); 
 
         int gid = gidOffset;
-        this.StartGidOffset = gidOffset;
+        //this.StartGidOffset = gidOffset;
         for (int col = 0; col < Width; col++) {
           for (int row = 0; row < Height; row++) {
             var tile       = new Tile() { Id = gid++ };
