@@ -60,7 +60,7 @@ namespace Test {
 
     [Test()]
     public void ItShouldGenerateTilesetFromGraphicsFile() {
-      Tilesets tilesets = Tilesets.Bootstrap();
+      Tilesets tilesets    = Tilesets.Bootstrap();
       Tileset floorTileset = tilesets[0];
       using (var stream = File.OpenRead("Fixtures/Tileset/Floor.png")) {
         using(var texture = Texture2D.FromStream(game.GraphicsDevice, stream)) {
@@ -69,7 +69,7 @@ namespace Test {
           floorTileset.TextureName = "Floor.png";
         }
 
-        Assert.AreEqual(819, tilesets[0].TileCount);
+        Assert.AreEqual(819, floorTileset.TileCount);
 
         Tile firstTile = floorTileset[0];
 
@@ -80,6 +80,26 @@ namespace Test {
         Tile secondTile = floorTileset[1];
         Assert.AreEqual(1, secondTile.Id);
         Assert.AreEqual(new Rectangle(0,DEFAULT_TILE_SIZE ,DEFAULT_TILE_SIZE,DEFAULT_TILE_SIZE), secondTile.Rect);
+      }
+
+      Tileset townTileset = tilesets[1];
+
+      using (var stream = File.OpenRead("Fixtures/Tileset/Map0.png")) {
+        using (var texture = Texture2D.FromStream(game.GraphicsDevice, stream)) {
+          townTileset.SetupUsingTexture(texture, DEFAULT_TILE_SIZE);
+          townTileset.Name = "Town";
+          townTileset.TextureName = "Map0.pn";
+        }
+
+        Assert.AreEqual(180, townTileset.TileCount);
+
+        Tile firstTile = townTileset[1000];
+
+        Assert.IsNotNull(firstTile);
+        Assert.AreEqual(1000, firstTile.Id);
+
+        Tile secondTile = townTileset[1001];
+        Assert.AreEqual(1001, secondTile.Id);
       }
     }
 
