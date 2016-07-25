@@ -9,6 +9,13 @@ namespace Editor {
     public Tileset tileset;
 
     [TreeNodeValue (Column=0)]
+    public string Id {
+      get {
+        return (tileset.Id+1).ToString("D4");
+      }
+    }
+
+    [TreeNodeValue (Column=1)]
     public string Name {
       get {
         return tileset.Name;
@@ -28,7 +35,8 @@ namespace Editor {
       Destroyed += OnClose;
       this.Build();
 
-      tilesetsNodeView.AppendColumn("Name", new CellRendererText(), "text", 0);
+      tilesetsNodeView.AppendColumn("Id", new CellRendererText(), "text", 0);
+      tilesetsNodeView.AppendColumn("Name", new CellRendererText(), "text", 1);
       tilesetsNodeView.ShowAll();
       tilesetsNodeView.NodeSelection.Changed += new System.EventHandler(OnTilesetSelected);
       Reload();
@@ -54,9 +62,12 @@ namespace Editor {
         if (selection.SelectedNode != null) {
           var selectedTilesetNode = (TilesetTreeModel)selection.SelectedNode;
           tilesetEditor.CurrentTileset = selectedTilesetNode.tileset;
+
           tilesetNameEntry.Text = CurrentTileset.Name;
+          tilesetGraphicsEntry.Text = CurrentTileset.TextureName;
         } else {
-          tilesetNameEntry.Text = "";
+          tilesetNameEntry.Text = tilesetGraphicsEntry.Text = "";
+
           tilesetEditor.CurrentTileset = null;
         }
       }
@@ -111,6 +122,28 @@ namespace Editor {
       if (CurrentTileset != null) {
         CurrentTileset.Name = tilesetNameEntry.Text;
         tilesetsNodeView.QueueDraw();
+      }
+    }
+
+    protected void OnSelectTilesetGraphicsButtonClicked(object sender, EventArgs e) {
+      using(FileChooserDialog fileChooser = new FileChooserDialog ("Import Tileset", this, FileChooserAction.Open)) {
+        fileChooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+        fileChooser.AddButton(Stock.Open, ResponseType.Ok);
+        fileChooser.Filter = new FileFilter();
+        fileChooser.Filter.AddPattern("*.png");
+
+        ResponseType RetVal = (ResponseType)fileChooser.Run();
+
+        // handle the dialog's exit value
+        // Read the file name from Fcd.Filename
+        if (RetVal == ResponseType.Ok) {
+          // do something
+          // If file is not in tilesets directory then copy it there
+          // if there is another file with the same name then show alert
+
+        }
+
+        fileChooser.Hide();
       }
     }
   }

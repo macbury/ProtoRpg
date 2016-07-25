@@ -21,27 +21,32 @@
       </action>
       <action id="TilesetsAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">F11</property>
         <property name="Label" translatable="yes">Tilesets</property>
         <property name="ShortLabel" translatable="yes">Tilesets</property>
         <signal name="Activated" handler="OnConfigureTilesetsAction" />
       </action>
       <action id="CharactersAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">F2</property>
         <property name="Label" translatable="yes">Characters</property>
         <property name="ShortLabel" translatable="yes">Characters</property>
       </action>
       <action id="AnimationsAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">F3</property>
         <property name="Label" translatable="yes">Animations</property>
         <property name="ShortLabel" translatable="yes">Animations</property>
       </action>
       <action id="MonstersAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">F4</property>
         <property name="Label" translatable="yes">Monsters</property>
         <property name="ShortLabel" translatable="yes">Monsters</property>
       </action>
       <action id="AttacksAction">
         <property name="Type">Action</property>
+        <property name="Accelerator">F5</property>
         <property name="Label" translatable="yes">Attacks</property>
         <property name="ShortLabel" translatable="yes">Attacks</property>
       </action>
@@ -203,20 +208,6 @@
     </child>
   </widget>
   <widget class="Gtk.Dialog" id="Editor.TilesetsManagerDialog" design-size="800 600">
-    <action-group name="Default">
-      <action id="newAction">
-        <property name="Type">Action</property>
-        <property name="HideIfEmpty">False</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-new</property>
-      </action>
-      <action id="removeAction">
-        <property name="Type">Action</property>
-        <property name="HideIfEmpty">False</property>
-        <property name="Label" translatable="yes" />
-        <property name="StockId">gtk-remove</property>
-      </action>
-    </action-group>
     <action-group name="EditTilesetGroup">
       <action id="PassableAction">
         <property name="Type">Radio</property>
@@ -237,6 +228,20 @@
         <property name="Active">False</property>
         <property name="Value">0</property>
         <property name="Group">tilesetEditingGroup</property>
+      </action>
+    </action-group>
+    <action-group name="Default">
+      <action id="newAction">
+        <property name="Type">Action</property>
+        <property name="HideIfEmpty">False</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-new</property>
+      </action>
+      <action id="removeAction">
+        <property name="Type">Action</property>
+        <property name="HideIfEmpty">False</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-remove</property>
       </action>
     </action-group>
     <property name="MemberName" />
@@ -384,6 +389,7 @@
                                 <property name="Type">TextOnly</property>
                                 <property name="Label" translatable="yes">...</property>
                                 <property name="UseUnderline">True</property>
+                                <signal name="Clicked" handler="OnSelectTilesetGraphicsButtonClicked" />
                               </widget>
                               <packing>
                                 <property name="TopAttach">1</property>

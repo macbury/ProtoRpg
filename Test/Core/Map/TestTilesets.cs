@@ -101,30 +101,9 @@ namespace Test {
         Tile secondTile = townTileset[1001];
         Assert.AreEqual(1001, secondTile.Id);
       }
+
+     //XmlManager<Tilesets>.SaveCompressed("/tmp/compressed.data", tilesets);
     }
-
-    /*[Test()]
-    public void ItShouldGenerateTilesOnStart() {
-      Tilesets tilesets = Tilesets.LoadOrBootstrap(DEFAULT_TILESETS);
-      Tileset tileset   = tilesets[0];
-      Assert.AreEqual(480, tileset.TileCount);
-
-      Tile firstTile = tileset[0];
-
-      Assert.IsNotNull(firstTile);
-      Assert.AreEqual(0, firstTile.Id);
-      Assert.AreEqual(new Rectangle(0,0 ,16,16), firstTile.Rect);
-
-      Tile secondTile = tileset[1];
-      Assert.AreEqual(1, secondTile.Id);
-      Assert.AreEqual(new Rectangle(0,16 ,16,16), secondTile.Rect);
-
-      Tileset secondTileset = tilesets[1];
-
-      firstTile = secondTileset[500];
-      Assert.IsNotNull(firstTile);
-      Assert.AreEqual(500, firstTile.Id);
-    }*/
 
     [Test()]
     public void ItShouldLoadTilesetsFromOneXml() {

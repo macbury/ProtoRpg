@@ -24,6 +24,12 @@ namespace Editor {
     /// </summary>
     public void Refresh() {
       this.QueueDraw();
+      if (Tileset == null) {
+        Parent.SetSizeRequest(0, 0);
+      } else {
+        Parent.SetSizeRequest(700, 700);
+      }
+
     }
 
     protected override bool OnExposeEvent(Gdk.EventExpose evnt) {
@@ -62,7 +68,7 @@ namespace Editor {
 
     public TilesetEditorWidget() {
       this.drawingArea = new TilesetDrawningArea();
-      SetSizeRequest(700, 700);
+
       this.Build();
       this.Add(drawingArea);
     }

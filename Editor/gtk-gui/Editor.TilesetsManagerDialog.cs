@@ -285,6 +285,7 @@ namespace Editor
 			this.DefaultHeight = 600;
 			this.Show ();
 			this.tilesetNameEntry.Changed += new global::System.EventHandler (this.OnNameEntryChange);
+			this.selectTilesetGraphicsButton.Clicked += new global::System.EventHandler (this.OnSelectTilesetGraphicsButtonClicked);
 			this.buttonCancel.Clicked += new global::System.EventHandler (this.OnCancelButtonClicked);
 			this.buttonOk.Clicked += new global::System.EventHandler (this.OnOkButtonClicked);
 		}
