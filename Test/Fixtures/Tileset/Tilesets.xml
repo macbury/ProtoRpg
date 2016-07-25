@@ -1,9 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTileset xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Tileset>
-  	
+  	<Name>Forest</Name>
+  	<Width>30</Width>
+	<Height>16</Height>
+	<TextureName>forest.png</TextureName>
   </Tileset>
-  <Tileset xsi:nil="true" />
+  <Tileset>
+  	<Name>Town</Name>
+  	<Width>30</Width>
+	<Height>16</Height>
+	<TextureName>town.png</TextureName>
+  </Tileset>
   <Tileset xsi:nil="true" />
   <Tileset xsi:nil="true" />
   <Tileset xsi:nil="true" />

@@ -52,13 +52,13 @@ namespace MonoRPG {
     public Texture2D Texture;
 
     [XmlIgnoreAttribute]
-    public Vector2 TileSize;
-    [XmlIgnoreAttribute]
     public int StartGidOffset {
       get {
         return Id * TILES_PER_ID;
       }
     }
+
+    public Vector2 TileSize;
 
     [XmlIgnoreAttribute]
     public int TileCount {
@@ -70,28 +70,28 @@ namespace MonoRPG {
     }
 
     /// <summary>
-    /// Load information about tileset and calculate tileset gids.
+    /// Using information from texture generates new tiles
     /// </summary>
-    public void Load(int tileSize, int gidOffset) {
+    /// <param name="texture">Texture.</param>
+    /// <param name="tileSize">Tile size.</param>
+    public void SetupUsingTexture(Texture2D texture, int tileSize) {
       TileSize  = new Vector2(tileSize, tileSize);
 
-      if (Tiles == null || Tiles.Count == 0) {
-        Tiles = new List<Tile>(); 
+      Width = texture.Width / tileSize;
+      Height = texture.Height / tileSize;
+      Tiles = new List<Tile>();
 
-        int gid = gidOffset;
-        //this.StartGidOffset = gidOffset;
-        for (int col = 0; col < Width; col++) {
-          for (int row = 0; row < Height; row++) {
-            var tile       = new Tile() { Id = gid++ };
-            var size       = new Point((int)TileSize.X, (int)TileSize.Y);
-            var tileOffset = new Point(col, row) * size;
-            tile.Rect      = new Rectangle(tileOffset, size);
-            tile.Tileset   = this;
-            Tiles.Add(tile);
-          }
+      int gid = StartGidOffset;
+      for (int col = 0; col < Width; col++) {
+        for (int row = 0; row < Height; row++) {
+          var tile       = new Tile() { Id = gid++ };
+          var size       = new Point(tileSize, tileSize);
+          var tileOffset = new Point(col, row) * size;
+          tile.Rect      = new Rectangle(tileOffset, size);
+          tile.Tileset   = this;
+          Tiles.Add(tile);
         }
       }
-
     }
 
     /// <summary>

@@ -33,7 +33,7 @@ namespace Editor {
       tilesetsNodeView.NodeSelection.Changed += new System.EventHandler(OnTilesetSelected);
       Reload();
 
-      if (mapManager.TilesetCount > 0) {
+      if (mapManager.Tilesets.Count > 0) {
         //tilesetsNodeView.NodeStore.GetEnumerator()[0];
         //tilesetsNodeView.NodeSelection.SelectNode(tilesetsNodeView.NodeStore.GetNode(new TreePath(0)));
       }

@@ -18,7 +18,7 @@ namespace MonoRPG {
 
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
-    Config config;
+    public Config config;
     Camera camera;
 
     public RPGGame(Config config) {
@@ -105,7 +105,7 @@ namespace MonoRPG {
         for (int x = 0; x < Cols; x++) {
           for (int y = 0; y < Rows; y++) {
             Vector2 tilePosition = new Vector2(x, y);
-            MapManager.GetTile(i++).Draw(spriteBatch, tilePosition);
+            //MapManager.GetTile(i++).Draw(spriteBatch, tilePosition);
           }
         }
 
