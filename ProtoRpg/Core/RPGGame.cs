@@ -11,17 +11,17 @@ namespace MonoRPG {
   /// <summary>
   /// This is the main type for your game.
   /// </summary>
-  public class Core : Game {
+  public class RPGGame : Game {
     const string TAG = "Core";
 
-    MapManager mapManager;
+    public MapManager MapManager { get; private set; }
 
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     Config config;
     Camera camera;
 
-    public Core(Config config) {
+    public RPGGame(Config config) {
       Log.Info(TAG, "Initializing...");
       this.config = config;
       graphics = new GraphicsDeviceManager(this);
@@ -33,7 +33,7 @@ namespace MonoRPG {
       graphics.IsFullScreen = false;
 
       Content.RootDirectory = "Content";
-      mapManager = new MapManager(Content, config.TileSize); 
+      MapManager = new MapManager(Content, config.TileSize); 
     }
 
     /// <summary>
@@ -56,13 +56,13 @@ namespace MonoRPG {
       // Create a new SpriteBatch, which can be used to draw textures.
       spriteBatch = new SpriteBatch(GraphicsDevice);
 
-      mapManager.LoadMap("hello_world");
+      MapManager.LoadMap("hello_world");
 
       //TODO: use this.Content to load your game content here 
     }
 
     protected override void UnloadContent() {
-      mapManager.Dispose();
+      MapManager.Dispose();
       Content.Unload();
       base.UnloadContent();
       camera.Dispose();
@@ -105,7 +105,7 @@ namespace MonoRPG {
         for (int x = 0; x < Cols; x++) {
           for (int y = 0; y < Rows; y++) {
             Vector2 tilePosition = new Vector2(x, y);
-            mapManager.GetTile(i++).Draw(spriteBatch, tilePosition);
+            MapManager.GetTile(i++).Draw(spriteBatch, tilePosition);
           }
         }
 

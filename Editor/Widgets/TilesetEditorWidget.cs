@@ -1,34 +1,42 @@
 ﻿using System;
 using Gtk;
+using Cairo;
+using MonoRPG;
+
+
 namespace Editor {
 
   /// <summary>
   /// Renders tilesets and selections
   /// </summary>
   internal class TilesetDrawningArea : DrawingArea {
+    public Tileset Tileset {
+      get;
+      set;
+    }
+
     public TilesetDrawningArea() {
       
+    }
+
+    /// <summary>
+    /// Refresh this drawning area.
+    /// </summary>
+    public void Refresh() {
+      this.QueueDraw();
     }
 
     protected override bool OnExposeEvent(Gdk.EventExpose evnt) {
       Cairo.Context cr = Gdk.CairoHelper.Create(evnt.Window);
 
-      cr.LineWidth = 9;
-      cr.SetSourceRGB(0.7, 0.2, 0.0);
-
-      int width, height;
-      width = Allocation.Width;
-      height = Allocation.Height;
-
-      cr.Translate(width/2, height/2);
-      cr.Arc(0, 0, (width < height ? width : height) / 2 - 10, 0, 2*Math.PI);
-      cr.StrokePreserve();
-
-      cr.SetSourceRGB(0.3, 0.4, 0.6);
-      cr.Fill();
-
-      ((IDisposable) cr.Target).Dispose();                                      
-      ((IDisposable) cr).Dispose();
+      using(cr.GetTarget()) {
+        using(cr) {
+          cr.SetSourceRGB(0.0, 0.0, 0.0);
+          cr.Rectangle(new Rectangle(new Point(), Allocation.Width, Allocation.Height));
+          cr.Fill();
+        }//((IDisposable) cr).Dispose();
+      }//((IDisposable) cr.GetTarget()).Dispose();            
+                               
       return true;
     }
   }
@@ -38,7 +46,19 @@ namespace Editor {
   /// This widget display list of tiles that can be edited
   /// </summary>
   public partial class TilesetEditorWidget : Bin {
-    TilesetDrawningArea drawingArea;
+    private TilesetDrawningArea drawingArea;
+    /// <summary>
+    /// Gets or sets the current tileset that you can edit;
+    /// </summary>
+    /// <value>The current tileset.</value>
+    public Tileset CurrentTileset {
+      set {
+        drawingArea.Tileset = value;
+        drawingArea.Refresh();
+      }
+
+      get { return drawingArea.Tileset; }
+    }
 
     public TilesetEditorWidget() {
       this.drawingArea = new TilesetDrawningArea();

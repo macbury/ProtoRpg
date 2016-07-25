@@ -17,6 +17,10 @@ namespace MonoRPG {
     private ContentManager contentManager;
     public Tileset CurrentTileset { get; private set; }
 
+    public List<Tileset> Tilesets {
+      get { return new List<Tileset>(tilesets.Values); }
+    }
+
     const string TAG = "MapManager";
 
     int TileSize;
@@ -25,9 +29,9 @@ namespace MonoRPG {
       this.contentManager = new ContentManager(contentManager.ServiceProvider, contentManager.RootDirectory);
       this.TileSize = TileSize;
       this.tiles    = new List<Tile>();
-      tilesets = new Dictionary<string, Tileset>();
+      tilesets      = new Dictionary<string, Tileset>();
 
-      this.loadTilesetInformation();
+      this.ReloadTilesets();
     }
 
     #region Tileset
@@ -60,7 +64,8 @@ namespace MonoRPG {
     /// <summary>
     /// Loads the tileset information from tileset xmls
     /// </summary>
-    private void loadTilesetInformation() {
+    public void ReloadTilesets() {
+      Log.Info(TAG, "Reloading tilesets");
       tilesets.Clear();
       tiles.Clear();
 
@@ -77,6 +82,8 @@ namespace MonoRPG {
 
         tiles.AddRange(tileset.Tiles);
       }
+
+      //TODO if map is loaded here then reload its tileset too.
     }
 
     /// <summary>

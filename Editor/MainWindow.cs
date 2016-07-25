@@ -1,19 +1,26 @@
 ﻿using System;
 using Gtk;
 using Editor;
+using MonoRPG;
 
 public partial class MainWindow: Gtk.Window {
-  public MainWindow() : base(Gtk.WindowType.Toplevel) {
+  RPGGame game;
+
+  public MainWindow(RPGGame core) : base(Gtk.WindowType.Toplevel) {
     Build();
+    this.game = core;
+
   }
 
   protected void OnDeleteEvent(object sender, DeleteEventArgs a) {
+    game.Dispose();
     Application.Quit();
     a.RetVal = true;
   }
 
-  protected void onDbClick(object sender, EventArgs e) {
-    DatabaseManagerWindow databaseManagerWindow = new DatabaseManagerWindow();
-    databaseManagerWindow.Show();
+  protected void OnConfigureTilesetsAction(object sender, EventArgs e) {
+    TilesetsManagerDialog dialog = new TilesetsManagerDialog(game.MapManager);
+    dialog.ShowAll();
   }
+
 }

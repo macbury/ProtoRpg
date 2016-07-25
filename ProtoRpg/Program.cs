@@ -22,11 +22,11 @@ namespace MonoRPG {
   static class Program
     #endif
     {
-    private static Core game;
+    private static RPGGame game;
     private static Config config;
     internal static void RunGame() {
       config = Config.Load();
-      game   = new Core(config);
+      game   = new RPGGame(config);
 
       game.Run();
       #if !__IOS__  && !__TVOS__

@@ -7,7 +7,27 @@ public partial class MainWindow
 	
 	private global::Gtk.Action FileAction;
 	
-	private global::Gtk.Action dbAction;
+	private global::Gtk.Action DatabaseAction;
+	
+	private global::Gtk.Action TilesetsAction;
+	
+	private global::Gtk.Action CharactersAction;
+	
+	private global::Gtk.Action AnimationsAction;
+	
+	private global::Gtk.Action MonstersAction;
+	
+	private global::Gtk.Action AttacksAction;
+	
+	private global::Gtk.Action EditAction;
+	
+	private global::Gtk.Action DrawAction;
+	
+	private global::Gtk.Action ScaleAction;
+	
+	private global::Gtk.Action ToolsAction;
+	
+	private global::Gtk.Action GameAction;
 	
 	private global::Gtk.VBox vbox1;
 	
@@ -36,10 +56,39 @@ public partial class MainWindow
 		this.FileAction = new global::Gtk.Action ("FileAction", global::Mono.Unix.Catalog.GetString ("File"), null, null);
 		this.FileAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("File");
 		w1.Add (this.FileAction, null);
-		this.dbAction = new global::Gtk.Action ("dbAction", global::Mono.Unix.Catalog.GetString ("Database"), null, "gtk-preferences");
-		this.dbAction.IsImportant = true;
-		this.dbAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Database");
-		w1.Add (this.dbAction, null);
+		this.DatabaseAction = new global::Gtk.Action ("DatabaseAction", global::Mono.Unix.Catalog.GetString ("Database"), null, null);
+		this.DatabaseAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Database");
+		w1.Add (this.DatabaseAction, null);
+		this.TilesetsAction = new global::Gtk.Action ("TilesetsAction", global::Mono.Unix.Catalog.GetString ("Tilesets"), null, null);
+		this.TilesetsAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Tilesets");
+		w1.Add (this.TilesetsAction, null);
+		this.CharactersAction = new global::Gtk.Action ("CharactersAction", global::Mono.Unix.Catalog.GetString ("Characters"), null, null);
+		this.CharactersAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Characters");
+		w1.Add (this.CharactersAction, null);
+		this.AnimationsAction = new global::Gtk.Action ("AnimationsAction", global::Mono.Unix.Catalog.GetString ("Animations"), null, null);
+		this.AnimationsAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Animations");
+		w1.Add (this.AnimationsAction, null);
+		this.MonstersAction = new global::Gtk.Action ("MonstersAction", global::Mono.Unix.Catalog.GetString ("Monsters"), null, null);
+		this.MonstersAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Monsters");
+		w1.Add (this.MonstersAction, null);
+		this.AttacksAction = new global::Gtk.Action ("AttacksAction", global::Mono.Unix.Catalog.GetString ("Attacks"), null, null);
+		this.AttacksAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Attacks");
+		w1.Add (this.AttacksAction, null);
+		this.EditAction = new global::Gtk.Action ("EditAction", global::Mono.Unix.Catalog.GetString ("Edit"), null, null);
+		this.EditAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Edit");
+		w1.Add (this.EditAction, null);
+		this.DrawAction = new global::Gtk.Action ("DrawAction", global::Mono.Unix.Catalog.GetString ("Draw"), null, null);
+		this.DrawAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Draw");
+		w1.Add (this.DrawAction, null);
+		this.ScaleAction = new global::Gtk.Action ("ScaleAction", global::Mono.Unix.Catalog.GetString ("Scale"), null, null);
+		this.ScaleAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Scale");
+		w1.Add (this.ScaleAction, null);
+		this.ToolsAction = new global::Gtk.Action ("ToolsAction", global::Mono.Unix.Catalog.GetString ("Tools"), null, null);
+		this.ToolsAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Tools");
+		w1.Add (this.ToolsAction, null);
+		this.GameAction = new global::Gtk.Action ("GameAction", global::Mono.Unix.Catalog.GetString ("Game"), null, null);
+		this.GameAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Game");
+		w1.Add (this.GameAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -52,7 +101,7 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar2'><menu name='FileAction' action='FileAction'/></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name='menubar2'><menu name='FileAction' action='FileAction'/><menu name='EditAction' action='EditAction'/><menu name='DatabaseAction' action='DatabaseAction'><menuitem name='TilesetsAction' action='TilesetsAction'/><menuitem name='CharactersAction' action='CharactersAction'/><menuitem name='AnimationsAction' action='AnimationsAction'/><menuitem name='MonstersAction' action='MonstersAction'/><menuitem name='AttacksAction' action='AttacksAction'/></menu><menu name='DrawAction' action='DrawAction'/><menu name='ScaleAction' action='ScaleAction'/><menu name='ToolsAction' action='ToolsAction'/><menu name='GameAction' action='GameAction'/></menubar></ui>");
 		this.menubar2 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar2")));
 		this.menubar2.Name = "menubar2";
 		this.vbox1.Add (this.menubar2);
@@ -61,7 +110,7 @@ public partial class MainWindow
 		w2.Expand = false;
 		w2.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><toolbar name='mainToolbar'><toolitem name='dbAction' action='dbAction'/></toolbar></ui>");
+		this.UIManager.AddUiFromString ("<ui><toolbar name='mainToolbar'/></ui>");
 		this.mainToolbar = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/mainToolbar")));
 		this.mainToolbar.Name = "mainToolbar";
 		this.mainToolbar.ShowArrow = false;
@@ -118,6 +167,6 @@ public partial class MainWindow
 		}
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
-		this.dbAction.Activated += new global::System.EventHandler (this.onDbClick);
+		this.TilesetsAction.Activated += new global::System.EventHandler (this.OnConfigureTilesetsAction);
 	}
 }

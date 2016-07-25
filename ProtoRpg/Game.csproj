@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Core.cs" />
     <Compile Include="Core\Utils\Config.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -62,6 +61,7 @@
     <Compile Include="Core\Map\MapManager.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Core\RPGGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
