@@ -68,6 +68,7 @@
     <Compile Include="Core\Assets\Asset.cs" />
     <Compile Include="Core\Assets\AssetLoader.cs" />
     <Compile Include="Core\Assets\Loaders\Texture2DLoader.cs" />
+    <Compile Include="Core\Assets\Loaders\TilesetsLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />

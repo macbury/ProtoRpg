@@ -38,39 +38,75 @@ namespace MonoRPG {
       pendingAssetsToUnload = new Stack<Asset>();
 
       loaders.Add(typeof(Texture2D), new Texture2DLoader());
+      loaders.Add(typeof(Tilesets), new TilesetsLoader());
     }
 
     /// <summary>
     /// Load one asset at once. Returns true if loaded all assets
     /// </summary>
     public bool Update() {
-      if (pendingAssetsToLoad.Count > 0) {
-        Asset pendingAsset = pendingAssetsToLoad.Pop();
-        Log.Info(TAG, "Loading: " + pendingAsset.Path);
-        dynamic assetLoader = loaders[pendingAsset.ContentType];
-        pendingAsset.Content = assetLoader.Load(this, pendingAsset.Path);
-      }
-
       while(pendingAssetsToUnload.Count > 0) {
         Asset pendingAsset = pendingAssetsToUnload.Pop();
         if (pendingAsset.RefCount == 0) {
-          Log.Info(TAG, "Disposing: " + pendingAsset.Path + " nothing references it");
-          pendingAsset.Dispose();
-          assets.Remove(pendingAsset.Path);
+          UnloadNow(pendingAsset.Path);
         }
+      }
 
+      if (pendingAssetsToLoad.Count > 0) {
+        Asset pendingAsset = pendingAssetsToLoad.Pop();
+        LoadUsingLoader(pendingAsset);
       }
         
       return pendingAssetsToLoad.Count == 0;
     }
 
     /// <summary>
+    /// Load content for asset using loader
+    /// </summary>
+    /// <param name="pendingAsset">Pending asset.</param>
+    private void LoadUsingLoader(Asset pendingAsset) {
+      if (!pendingAsset.Loaded) {
+        Log.Info(TAG, "Loading: " + pendingAsset.Path);
+        dynamic assetLoader = loaders[pendingAsset.ContentType];
+
+        pendingAsset.Content = assetLoader.Load(this, pendingAsset.Path);
+      } else {
+        Log.Info(TAG, "Already loaded: " + pendingAsset.Path);
+      }
+    }
+
+    /// <summary>
     /// Loads all pending assets at once
     /// </summary>
-    public void LoadAll() {
+    public void UpdateAll() {
       while(!Update()) {
         
       }
+    }
+
+    /// <summary>
+    /// Unloads asset now.
+    /// </summary>
+    /// <param name="path">Path.</param>
+    public void UnloadNow(string path) {
+      if (assets.ContainsKey(path)) {
+        var pendingAsset = assets[path];
+        Log.Info(TAG, "Disposing: " + pendingAsset.Path + " nothing references it");
+        pendingAsset.Dispose();
+        assets.Remove(pendingAsset.Path);
+      }
+    }
+
+    /// <summary>
+    /// Loads asset now, without adding it to queue
+    /// </summary>
+    /// <returns>The now.</returns>
+    /// <param name="path">Path.</param>
+    /// <typeparam name="T">The 1st type parameter.</typeparam>
+    public T LoadNow<T>(string path) {
+      Asset asset = Load<T>(path);
+      LoadUsingLoader(asset);
+      return (T)asset.Content;
     }
 
     /// <summary>

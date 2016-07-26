@@ -5,7 +5,7 @@ namespace MonoRPG {
   public class Log {
 
     public static void Info(string tag, string message) {
-      Debug.WriteLine("[" + tag + "] " + message);
+      Console.WriteLine("[" + tag + "] " + message);
     }
   }
 }

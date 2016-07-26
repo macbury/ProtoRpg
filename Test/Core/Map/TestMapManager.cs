@@ -10,11 +10,18 @@ namespace Test {
   public class TestMapManager {
     MapManager mapManager;
 
+    RPGGame game;
+
     [SetUp()]
     public void SetUp() {
-      var contentManager = new ContentManager(new GameServiceContainer());
-      contentManager.RootDirectory = "./Fixtures";
-      mapManager = new MapManager(contentManager, 16);
+      this.game = new RPGGame(Config.Load());
+      this.game.RunOneFrame();
+      mapManager = this.game.MapManager;
+    }
+
+    [TearDown()]
+    public void TearDown() {
+      this.game.Dispose();
     }
 
     [Test()]
@@ -26,10 +33,10 @@ namespace Test {
     public void ItShouldAllowMeToFindTileset() {
       Tileset tileset = mapManager.Tilesets[0];
       Assert.IsNotNull(tileset);
-      Assert.AreEqual("Forest", tileset.Name);
+      Assert.AreEqual(0, tileset.Id);
 
       tileset = mapManager.Tilesets[1];
-      Assert.AreEqual("Town", tileset.Name);
+      Assert.AreEqual(1, tileset.Id);
       Assert.IsNotNull(tileset);
     }
   }

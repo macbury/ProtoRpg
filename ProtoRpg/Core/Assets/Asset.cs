@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections.Generic;
 
 namespace MonoRPG {
 
@@ -26,13 +27,15 @@ namespace MonoRPG {
     /// </summary>
     public object Content;
 
+    public List<Asset> Dependencies;
+
     public bool Loaded {
       get { return Content != null; }
     }
 
     public Asset() {
+      Dependencies = new List<Asset>();
     }
-      
 
     /// <summary>
     /// Decrease RefCount, and if it hits 0 then unload asset
@@ -49,6 +52,12 @@ namespace MonoRPG {
       RefCount = 0;
       if (Content is IDisposable)
         ((IDisposable)Content).Dispose();
+
+      foreach (var dependency in Dependencies) {
+        dependency.Unload();
+      }
+
+      Dependencies.Clear();
       Content = null;
     }
 

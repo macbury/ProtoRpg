@@ -13,15 +13,16 @@ namespace MonoRPG {
   public class MapManager : IDisposable {
     private const string TILESET_DIR = "Tileset";
     private const string TILESETS_FILE = "Tilesets.xml";
-    private ContentManager contentManager;
+    AssetsManager assetsManager;
+
     public Tilesets Tilesets;
 
     const string TAG = "MapManager";
 
     int TileSize;
 
-    public MapManager(ContentManager contentManager, int TileSize) {
-      this.contentManager = new ContentManager(contentManager.ServiceProvider, contentManager.RootDirectory);
+    public MapManager(AssetsManager assetsManager, int TileSize) {
+      this.assetsManager = assetsManager;
       this.TileSize = TileSize;
 
       this.ReloadTilesets();
@@ -29,16 +30,29 @@ namespace MonoRPG {
 
     #region Tileset
 
+    private String TilesetsPath {
+      get {
+        return Path.Combine(TILESET_DIR, TILESETS_FILE);
+      }
+    }
 
     /// <summary>
     /// Loads the tileset information from tileset xmls
     /// </summary>
     public void ReloadTilesets() {
       Log.Info(TAG, "Reloading tilesets");
-      if (this.Tilesets != null) {
-        Tilesets.Dispose();
-      }
-      this.Tilesets = Tilesets.LoadOrBootstrap(Path.Combine(contentManager.RootDirectory, TILESET_DIR, TILESETS_FILE));
+      assetsManager.UnloadNow(TilesetsPath);
+      this.Tilesets = assetsManager.LoadNow<Tilesets>(TilesetsPath);
+    }
+
+    /// <summary>
+    /// Saves the tilesets on the disk
+    /// </summary>
+    public void SaveTilesets() {
+      Log.Info(TAG, "Saving tileset as: " + TilesetsPath);
+      if (!Directory.Exists(TILESET_DIR))
+        Directory.CreateDirectory(TILESET_DIR);
+      XmlManager<Tilesets>.Save(TilesetsPath, this.Tilesets);
     }
 
     #endregion
@@ -61,8 +75,6 @@ namespace MonoRPG {
     /// Unloads current map and its resources.
     /// </summary>
     public void UnloadMap() {
-      contentManager.Unload();
-
       //if (CurrentTileset != null) {
       //  CurrentTileset.Texture = null;
       //}
@@ -79,8 +91,9 @@ namespace MonoRPG {
     /// <see cref="Dispose"/>, you must release all references to the <see cref="ProtoRpg.MapManager"/> so the garbage
     /// collector can reclaim the memory that the <see cref="ProtoRpg.MapManager"/> was occupying.</remarks>
     public void Dispose() {
-      Tilesets.Dispose();
-      contentManager.Dispose();
+      Tilesets = null;
+      assetsManager.UnloadNow(TilesetsPath);
+      assetsManager = null;
     }
 
     #endregion

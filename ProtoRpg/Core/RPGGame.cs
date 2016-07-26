@@ -38,7 +38,7 @@ namespace MonoRPG {
       Content.RootDirectory = "Content";
 
       Assets = new AssetsManager(GraphicsDevice);
-      MapManager = new MapManager(Content, config.TileSize); 
+      MapManager = new MapManager(Assets, config.TileSize); 
     }
 
     /// <summary>

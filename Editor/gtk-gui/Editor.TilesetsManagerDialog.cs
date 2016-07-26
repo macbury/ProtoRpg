@@ -6,13 +6,13 @@ namespace Editor
 	{
 		private global::Gtk.UIManager UIManager;
 		
-		private global::Gtk.RadioAction PassableAction;
-		
-		private global::Gtk.RadioAction LayerAction;
-		
 		private global::Gtk.Action newAction;
 		
 		private global::Gtk.Action removeAction;
+		
+		private global::Gtk.RadioAction PassableAction;
+		
+		private global::Gtk.RadioAction LayerAction;
 		
 		private global::Gtk.HPaned hpaned1;
 		
@@ -59,25 +59,25 @@ namespace Editor
 			global::Stetic.Gui.Initialize (this);
 			// Widget Editor.TilesetsManagerDialog
 			this.UIManager = new global::Gtk.UIManager ();
-			global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("EditTilesetGroup");
+			global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
+			this.newAction = new global::Gtk.Action ("newAction", null, null, "gtk-new");
+			this.newAction.HideIfEmpty = false;
+			w1.Add (this.newAction, null);
+			this.removeAction = new global::Gtk.Action ("removeAction", null, null, "gtk-remove");
+			this.removeAction.HideIfEmpty = false;
+			w1.Add (this.removeAction, null);
+			this.UIManager.InsertActionGroup (w1, 0);
+			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("EditTilesetGroup");
 			this.PassableAction = new global::Gtk.RadioAction ("PassableAction", global::Mono.Unix.Catalog.GetString ("Passable"), null, null, 0);
 			this.PassableAction.Group = new global::GLib.SList (global::System.IntPtr.Zero);
 			this.PassableAction.HideIfEmpty = false;
 			this.PassableAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Passable");
-			w1.Add (this.PassableAction, null);
+			w2.Add (this.PassableAction, null);
 			this.LayerAction = new global::Gtk.RadioAction ("LayerAction", global::Mono.Unix.Catalog.GetString ("Layer"), null, null, 0);
 			this.LayerAction.Group = this.PassableAction.Group;
 			this.LayerAction.HideIfEmpty = false;
 			this.LayerAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("Layer");
-			w1.Add (this.LayerAction, null);
-			this.UIManager.InsertActionGroup (w1, 0);
-			global::Gtk.ActionGroup w2 = new global::Gtk.ActionGroup ("Default");
-			this.newAction = new global::Gtk.Action ("newAction", null, null, "gtk-new");
-			this.newAction.HideIfEmpty = false;
-			w2.Add (this.newAction, null);
-			this.removeAction = new global::Gtk.Action ("removeAction", null, null, "gtk-remove");
-			this.removeAction.HideIfEmpty = false;
-			w2.Add (this.removeAction, null);
+			w2.Add (this.LayerAction, null);
 			this.UIManager.InsertActionGroup (w2, 1);
 			this.AddAccelGroup (this.UIManager.AccelGroup);
 			this.WidthRequest = 800;

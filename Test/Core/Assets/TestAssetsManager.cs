@@ -9,6 +9,8 @@ namespace Test {
   public class TestAssetsManager {
     const string EXAMPLE_TILESET_TEXTURE = "Fixtures/Tileset/Floor.png";
     const string EXAMPLE_TILESET2_TEXTURE = "Fixtures/Tileset/Map0.png";
+    const string DEFAULT_TILESETS = "Fixtures/Tilesets/Tilesets.xml";
+
     RPGGame game;
 
     [SetUp()]
@@ -34,7 +36,7 @@ namespace Test {
       assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
       Assert.AreEqual(2, textureAsset.RefCount);
 
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
       Assert.IsTrue(textureAsset.Loaded);
 
       assetsManager.Dispose();
@@ -61,7 +63,7 @@ namespace Test {
     public void ItShouldReturnLoadedTexture() {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
       Assert.IsNotNull(assetsManager.GetAsset<Texture2D>(EXAMPLE_TILESET_TEXTURE));
     }
 
@@ -70,9 +72,9 @@ namespace Test {
     public void ItShouldLoadAndUnloadAssets() {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       Asset asset = assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
       assetsManager.Unload(EXAMPLE_TILESET_TEXTURE);
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
 
       Assert.IsFalse(asset.Loaded);
       Assert.AreEqual(0, asset.RefCount);
@@ -84,18 +86,29 @@ namespace Test {
     public void ItShouldLoadAndUnloadOtherAsset() {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       Asset assetA = assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
       Asset assetB = assetsManager.Load<Texture2D>(EXAMPLE_TILESET2_TEXTURE);
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
 
       Assert.IsTrue(assetA.Loaded);
       Assert.IsTrue(assetB.Loaded);
 
       assetsManager.Unload(EXAMPLE_TILESET_TEXTURE);
-      assetsManager.LoadAll();
+      assetsManager.UpdateAll();
 
       Assert.IsFalse(assetA.Loaded);
       Assert.IsTrue(assetB.Loaded);
+    }
+
+    [Test()]
+    public void ItShouldLoadNowTileset() {
+      AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
+      var tilesetsFirst = assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
+      Assert.IsNotNull(tilesetsFirst);
+      assetsManager.UnloadNow(DEFAULT_TILESETS);
+      var tilesetsSecond = assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
+
+      Assert.AreNotSame(tilesetsFirst, tilesetsSecond);
     }
   }
 }

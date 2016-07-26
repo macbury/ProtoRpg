@@ -106,6 +106,7 @@ namespace Editor {
     }
 
     protected void OnOkButtonClicked(object sender, EventArgs e) {
+      mapManager.SaveTilesets();
       Destroy();
     }
 
