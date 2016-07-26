@@ -44,6 +44,7 @@
     <Reference Include="NVorbis">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\NVorbis.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -63,6 +64,10 @@
     </Compile>
     <Compile Include="Core\RPGGame.cs" />
     <Compile Include="Core\Map\Tilesets.cs" />
+    <Compile Include="Core\Assets\AssetsManager.cs" />
+    <Compile Include="Core\Assets\Asset.cs" />
+    <Compile Include="Core\Assets\AssetLoader.cs" />
+    <Compile Include="Core\Assets\Loaders\Texture2DLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
@@ -97,5 +102,7 @@
     <Folder Include="Core\Utils\" />
     <Folder Include="Core\Graphics\" />
     <Folder Include="Core\Map\" />
+    <Folder Include="Core\Assets\" />
+    <Folder Include="Core\Assets\Loaders\" />
   </ItemGroup>
 </Project>

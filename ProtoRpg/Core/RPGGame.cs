@@ -21,9 +21,12 @@ namespace MonoRPG {
     public Config config;
     Camera camera;
 
+    public AssetsManager Assets;
+
     public RPGGame(Config config) {
       Log.Info(TAG, "Initializing...");
       this.config = config;
+
       graphics = new GraphicsDeviceManager(this);
 
       // Configure resolution
@@ -33,6 +36,8 @@ namespace MonoRPG {
       graphics.IsFullScreen = false;
 
       Content.RootDirectory = "Content";
+
+      Assets = new AssetsManager(GraphicsDevice);
       MapManager = new MapManager(Content, config.TileSize); 
     }
 
@@ -62,6 +67,7 @@ namespace MonoRPG {
     }
 
     protected override void UnloadContent() {
+      Assets.Dispose();
       MapManager.Dispose();
       Content.Unload();
       base.UnloadContent();

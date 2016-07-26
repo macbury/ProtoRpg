@@ -49,6 +49,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Core\Map\TestTileset.cs" />
+    <Compile Include="Core\Assets\TestAssetsManager.cs" />
+    <Compile Include="Core\Assets\TestAsset.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -74,6 +76,7 @@
     <Folder Include="Core\Map\" />
     <Folder Include="Fixtures\Tileset\" />
     <Folder Include="Fixtures\Maps\" />
+    <Folder Include="Core\Assets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProtoRpg\Game.csproj">
