@@ -1,6 +1,8 @@
 ﻿using System;
 using MonoRPG;
 using Gtk;
+using Microsoft.Xna.Framework;
+using System.IO;
 
 namespace Editor {
 
@@ -127,12 +129,14 @@ namespace Editor {
     }
 
     protected void OnSelectTilesetGraphicsButtonClicked(object sender, EventArgs e) {
+      DirectoryInfo rootDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
       using(FileChooserDialog fileChooser = new FileChooserDialog ("Import Tileset", this, FileChooserAction.Open)) {
         fileChooser.AddButton(Stock.Cancel, ResponseType.Cancel);
         fileChooser.AddButton(Stock.Open, ResponseType.Ok);
+
         fileChooser.Filter = new FileFilter();
         fileChooser.Filter.AddPattern("*.png");
-
+        fileChooser.SetCurrentFolder(rootDir.ToString());
         ResponseType RetVal = (ResponseType)fileChooser.Run();
 
         // handle the dialog's exit value
@@ -141,7 +145,15 @@ namespace Editor {
           // do something
           // If file is not in tilesets directory then copy it there
           // if there is another file with the same name then show alert
+          //Dire
 
+          DirectoryInfo selectedDir = new DirectoryInfo(fileChooser.Filename).Parent;
+
+          if (FileHelper.IsInside(selectedDir, rootDir)) {
+            Log.Info("We dont need to move this file", fileChooser.Filename);
+          }
+          //Location = AppDomain.CurrentDomain.BaseDirectory;
+          Log.Info("Player selected", fileChooser.Filename);
         }
 
         fileChooser.Hide();

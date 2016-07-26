@@ -48,7 +48,7 @@ namespace Test {
     [ExpectedException( typeof( AssetNotFound ) )]
     public void ItShouldThrowExceptionIfAssetIsNotLoaded() {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
-      Assert.IsNull(assetsManager.GetAsset<Texture2D>(EXAMPLE_TILESET_TEXTURE));
+      Assert.IsNull(assetsManager.Get<Texture2D>(EXAMPLE_TILESET_TEXTURE));
     }
 
     [Test()]
@@ -56,7 +56,7 @@ namespace Test {
     public void ItShouldThrowExceptionIfAssetIsAddedToLoadButNotLoaded() {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
-      Assert.IsNull(assetsManager.GetAsset<Texture2D>(EXAMPLE_TILESET_TEXTURE));
+      Assert.IsNull(assetsManager.Get<Texture2D>(EXAMPLE_TILESET_TEXTURE));
     }
 
     [Test()]
@@ -64,7 +64,7 @@ namespace Test {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
       assetsManager.UpdateAll();
-      Assert.IsNotNull(assetsManager.GetAsset<Texture2D>(EXAMPLE_TILESET_TEXTURE));
+      Assert.IsNotNull(assetsManager.Get<Texture2D>(EXAMPLE_TILESET_TEXTURE));
     }
 
     [Test()]
@@ -79,7 +79,7 @@ namespace Test {
       Assert.IsFalse(asset.Loaded);
       Assert.AreEqual(0, asset.RefCount);
 
-      Assert.IsNotNull(assetsManager.GetAsset<Texture2D>(EXAMPLE_TILESET_TEXTURE));
+      Assert.IsNotNull(assetsManager.Get<Texture2D>(EXAMPLE_TILESET_TEXTURE));
     }
 
     [Test()]
@@ -104,11 +104,39 @@ namespace Test {
     public void ItShouldLoadNowTileset() {
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       var tilesetsFirst = assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
+      var asset = assetsManager.GetAsset(DEFAULT_TILESETS);
       Assert.IsNotNull(tilesetsFirst);
+      Assert.AreEqual(1, asset.RefCount);
       assetsManager.UnloadNow(DEFAULT_TILESETS);
+      Assert.AreEqual(0, asset.RefCount);
       var tilesetsSecond = assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
 
       Assert.AreNotSame(tilesetsFirst, tilesetsSecond);
+    }
+
+    [Test()]
+    public void ItShouldUpdateRefCountForMultipleLoadNow() {
+      AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
+      assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
+      assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
+      assetsManager.LoadNow<Tilesets>(DEFAULT_TILESETS);
+      var asset = assetsManager.GetAsset(DEFAULT_TILESETS);
+      Assert.AreEqual(3, asset.RefCount);
+      Assert.IsTrue(asset.Loaded);
+
+      assetsManager.Unload(DEFAULT_TILESETS);
+      Assert.AreEqual(2, asset.RefCount);
+
+      assetsManager.Unload(DEFAULT_TILESETS);
+      Assert.AreEqual(1, asset.RefCount);
+
+      assetsManager.Unload(DEFAULT_TILESETS);
+      Assert.AreEqual(0, asset.RefCount);
+      Assert.IsTrue(asset.Loaded);
+
+      assetsManager.UpdateAll();
+
+      Assert.IsFalse(asset.Loaded);
     }
   }
 }

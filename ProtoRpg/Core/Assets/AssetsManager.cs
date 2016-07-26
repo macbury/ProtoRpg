@@ -26,16 +26,16 @@ namespace MonoRPG {
 
     private Dictionary<string, Asset> assets;
     private Dictionary<Type, object> loaders;
-    private Stack<Asset> pendingAssetsToLoad;
-    private Stack<Asset> pendingAssetsToUnload;
+    private Queue<Asset> pendingAssetsToLoad;
+    private Queue<Asset> pendingAssetsToUnload;
     public GraphicsDevice GraphicsDevice;
 
     public AssetsManager(GraphicsDevice graphicsDevice) {
       this.GraphicsDevice = graphicsDevice;
       assets              = new Dictionary<string, Asset>();
       loaders             = new Dictionary<Type, object>();
-      pendingAssetsToLoad = new Stack<Asset>();
-      pendingAssetsToUnload = new Stack<Asset>();
+      pendingAssetsToLoad = new Queue<Asset>();
+      pendingAssetsToUnload = new Queue<Asset>();
 
       loaders.Add(typeof(Texture2D), new Texture2DLoader());
       loaders.Add(typeof(Tilesets), new TilesetsLoader());
@@ -46,15 +46,16 @@ namespace MonoRPG {
     /// </summary>
     public bool Update() {
       while(pendingAssetsToUnload.Count > 0) {
-        Asset pendingAsset = pendingAssetsToUnload.Pop();
+        Asset pendingAsset = pendingAssetsToUnload.Dequeue();
         if (pendingAsset.RefCount == 0) {
           UnloadNow(pendingAsset.Path);
         }
       }
 
       if (pendingAssetsToLoad.Count > 0) {
-        Asset pendingAsset = pendingAssetsToLoad.Pop();
-        LoadUsingLoader(pendingAsset);
+        Asset pendingAsset = pendingAssetsToLoad.Dequeue();
+        if (pendingAsset.RefCount > 0)
+          LoadUsingLoader(pendingAsset);
       }
         
       return pendingAssetsToLoad.Count == 0;
@@ -126,7 +127,7 @@ namespace MonoRPG {
         Log.Info(TAG, "New asset to load: " + path);
         Asset asset = new Asset() { RefCount = 1, Path = path, ContentType = assetType };
         assets.Add(path, asset);
-        pendingAssetsToLoad.Push(asset);
+        pendingAssetsToLoad.Enqueue(asset);
         return asset;
       }
     }
@@ -137,7 +138,7 @@ namespace MonoRPG {
     /// <returns>The asset.</returns>
     /// <param name="path">Path.</param>
     /// <typeparam name="T">The 1st type parameter.</typeparam>
-    public T GetAsset<T>(string path) {
+    public T Get<T>(string path) {
       if (assets.ContainsKey(path)) {
         Asset asset = assets[path];
 
@@ -146,6 +147,19 @@ namespace MonoRPG {
         } else {
           throw new AssetNotLoaded(path);
         }
+      } else {
+        throw new AssetNotFound(path);
+      }
+    }
+
+    /// <summary>
+    /// Gets asset descriptor.
+    /// </summary>
+    /// <returns>The asset.</returns>
+    /// <param name="path">Path.</param>
+    public Asset GetAsset(string path) {
+      if (assets.ContainsKey(path)) {
+        return assets[path];
       } else {
         throw new AssetNotFound(path);
       }
@@ -162,7 +176,7 @@ namespace MonoRPG {
         if (asset.Loaded) {
           asset.Unload();
           if (!pendingAssetsToUnload.Contains(asset))
-            pendingAssetsToUnload.Push(asset);
+            pendingAssetsToUnload.Enqueue(asset);
         } else {
           throw new AssetNotLoaded(path);
         }

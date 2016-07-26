@@ -76,6 +76,7 @@
     <Compile Include="gtk-gui\Editor.TilesetEditorWidget.cs" />
     <Compile Include="Windows\Database\TilesetsManagerDialog.cs" />
     <Compile Include="gtk-gui\Editor.TilesetsManagerDialog.cs" />
+    <Compile Include="Utils\FileHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -91,5 +92,6 @@
     <Folder Include="Widgets\" />
     <Folder Include="Windows\" />
     <Folder Include="Windows\Database\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 </Project>
