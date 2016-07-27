@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTileset xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Tileset>
+  	<Id>0</Id>
   	<Name>Forest</Name>
   	<Width>30</Width>
 	<Height>16</Height>
 	<TextureName>forest.png</TextureName>
   </Tileset>
   <Tileset>
+  	<Id>1</Id>
   	<Name>Town</Name>
   	<Width>30</Width>
 	<Height>16</Height>

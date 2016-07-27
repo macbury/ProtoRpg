@@ -30,9 +30,13 @@ namespace Editor {
   /// </summary>
   public partial class TilesetsManagerDialog : Gtk.Dialog {
     MapManager mapManager;
+    AssetsManager assets;
 
-    public TilesetsManagerDialog(MapManager mapManager) {
+    const string TAG = "TilesetsManagerDialog";
+
+    public TilesetsManagerDialog(MapManager mapManager, AssetsManager assets) {
       this.mapManager = mapManager;
+      this.assets = assets;
 
       Destroyed += OnClose;
       this.Build();
@@ -66,7 +70,11 @@ namespace Editor {
           tilesetEditor.CurrentTileset = selectedTilesetNode.tileset;
 
           tilesetNameEntry.Text = CurrentTileset.Name;
-          tilesetGraphicsEntry.Text = CurrentTileset.TextureName;
+          if (CurrentTileset.TextureName == null) {
+            tilesetGraphicsEntry.Text = "<empty>";
+          } else {
+            tilesetGraphicsEntry.Text = CurrentTileset.TextureName;
+          }
         } else {
           tilesetNameEntry.Text = tilesetGraphicsEntry.Text = "";
 
@@ -129,14 +137,14 @@ namespace Editor {
     }
 
     protected void OnSelectTilesetGraphicsButtonClicked(object sender, EventArgs e) {
-      DirectoryInfo rootDir = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+      DirectoryInfo tilesetsAbsolutePath = new DirectoryInfo(assets.PathResolver.Absolute(MapManager.TILESET_DIR));
       using(FileChooserDialog fileChooser = new FileChooserDialog ("Import Tileset", this, FileChooserAction.Open)) {
         fileChooser.AddButton(Stock.Cancel, ResponseType.Cancel);
         fileChooser.AddButton(Stock.Open, ResponseType.Ok);
 
         fileChooser.Filter = new FileFilter();
         fileChooser.Filter.AddPattern("*.png");
-        fileChooser.SetCurrentFolder(rootDir.ToString());
+        fileChooser.SetCurrentFolder(tilesetsAbsolutePath.FullName);
         ResponseType RetVal = (ResponseType)fileChooser.Run();
 
         // handle the dialog's exit value
@@ -147,13 +155,27 @@ namespace Editor {
           // if there is another file with the same name then show alert
           //Dire
 
-          DirectoryInfo selectedDir = new DirectoryInfo(fileChooser.Filename).Parent;
+          DirectoryInfo selectedFile = new DirectoryInfo(fileChooser.Filename);
+          DirectoryInfo tilesetFile = selectedFile;
+          string tilesetFileName = System.IO.Path.GetFileName(selectedFile.FullName);
+          if (!FileHelper.IsInside(selectedFile, tilesetsAbsolutePath)) {
+            tilesetFile = new DirectoryInfo(
+              System.IO.Path.Combine(
+                tilesetsAbsolutePath.FullName, 
+                tilesetFileName
+              )
+            );
+            Log.Info(TAG, "Importing tileset into project from " + selectedFile.FullName + " to " + tilesetFile.FullName);
 
-          if (FileHelper.IsInside(selectedDir, rootDir)) {
-            Log.Info("We dont need to move this file", fileChooser.Filename);
+            File.Copy(
+              selectedFile.FullName,
+              tilesetFile.FullName
+            );
+
+          } else {
+            Log.Info(TAG, "We dont need to move this file" + fileChooser.Filename);
           }
-          //Location = AppDomain.CurrentDomain.BaseDirectory;
-          Log.Info("Player selected", fileChooser.Filename);
+          tilesetGraphicsEntry.Text = CurrentTileset.TextureName = tilesetFileName;
         }
 
         fileChooser.Hide();

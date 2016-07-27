@@ -8,6 +8,7 @@ namespace Editor {
         return false;
       }
 
+
       if (String.Equals(path.Parent.FullName, folder.FullName, StringComparison.InvariantCultureIgnoreCase)) {
         return true;
       }

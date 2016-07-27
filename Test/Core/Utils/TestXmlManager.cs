@@ -13,7 +13,7 @@ namespace Test {
 
     [Test()]
     public void ItShouldLoadDummyObjectFromXml() {
-      DummyXmlObject dummy = XmlManager<DummyXmlObject>.Load("Fixtures/dummy_xml_object.xml");
+      DummyXmlObject dummy = XmlManager<DummyXmlObject>.Load("Content/dummy_xml_object.xml");
       Assert.IsNotNull(dummy);
       Assert.AreEqual(dummy.ValueToLoad, 10);
     }

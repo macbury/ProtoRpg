@@ -9,7 +9,7 @@ namespace Test {
   [TestFixture()]
   public class TestTilesets {
     const int DEFAULT_TILE_SIZE   = 16;
-    const string DEFAULT_TILESETS = "Fixtures/Tilesets/Tilesets.xml";
+    const string DEFAULT_TILESETS = "Content/Tilesets/Tilesets.xml";
     RPGGame game;
 
     [SetUp()]
@@ -62,7 +62,7 @@ namespace Test {
     public void ItShouldGenerateTilesetFromGraphicsFile() {
       Tilesets tilesets    = Tilesets.Bootstrap();
       Tileset floorTileset = tilesets[0];
-      using (var stream = File.OpenRead("Fixtures/Tileset/Floor.png")) {
+      using (var stream = File.OpenRead("Content/Tileset/Floor.png")) {
         using(var texture = Texture2D.FromStream(game.GraphicsDevice, stream)) {
           floorTileset.SetupUsingTexture(texture, DEFAULT_TILE_SIZE);
           floorTileset.Name = "Floor";
@@ -84,7 +84,7 @@ namespace Test {
 
       Tileset townTileset = tilesets[1];
 
-      using (var stream = File.OpenRead("Fixtures/Tileset/Map0.png")) {
+      using (var stream = File.OpenRead("Content/Tileset/Map0.png")) {
         using (var texture = Texture2D.FromStream(game.GraphicsDevice, stream)) {
           townTileset.SetupUsingTexture(texture, DEFAULT_TILE_SIZE);
           townTileset.Name = "Town";

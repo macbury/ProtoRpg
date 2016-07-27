@@ -11,7 +11,7 @@ namespace MonoRPG {
   /// This class contains list of all maps, and tilesets
   /// </summary>
   public class MapManager : IDisposable {
-    private const string TILESET_DIR = "Tileset";
+    public const string TILESET_DIR = "Tileset";
     private const string TILESETS_FILE = "Tilesets.xml";
     AssetsManager assetsManager;
 
@@ -29,7 +29,10 @@ namespace MonoRPG {
     }
 
     #region Tileset
-
+    /// <summary>
+    /// Path to tileset xml
+    /// </summary>
+    /// <value>The tilesets path.</value>
     private String TilesetsPath {
       get {
         return Path.Combine(TILESET_DIR, TILESETS_FILE);
@@ -52,7 +55,7 @@ namespace MonoRPG {
       Log.Info(TAG, "Saving tileset as: " + TilesetsPath);
       if (!Directory.Exists(TILESET_DIR))
         Directory.CreateDirectory(TILESET_DIR);
-      XmlManager<Tilesets>.Save(TilesetsPath, this.Tilesets);
+      XmlManager<Tilesets>.Save(assetsManager.PathResolver.Absolute(TilesetsPath), this.Tilesets);
     }
 
     #endregion

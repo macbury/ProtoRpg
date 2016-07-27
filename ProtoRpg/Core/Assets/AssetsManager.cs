@@ -30,8 +30,13 @@ namespace MonoRPG {
     private Queue<Asset> pendingAssetsToUnload;
     public GraphicsDevice GraphicsDevice;
 
-    public AssetsManager(GraphicsDevice graphicsDevice) {
+    public IPathResolver PathResolver { get; private set; }
+
+    public AssetsManager(GraphicsDevice graphicsDevice) : this(graphicsDevice, new FilePathResolver()) {}
+
+    public AssetsManager(GraphicsDevice graphicsDevice, IPathResolver pathResolver)  {
       this.GraphicsDevice = graphicsDevice;
+      this.PathResolver   = pathResolver;
       assets              = new Dictionary<string, Asset>();
       loaders             = new Dictionary<Type, object>();
       pendingAssetsToLoad = new Queue<Asset>();
@@ -69,8 +74,8 @@ namespace MonoRPG {
       if (!pendingAsset.Loaded) {
         Log.Info(TAG, "Loading: " + pendingAsset.Path);
         dynamic assetLoader = loaders[pendingAsset.ContentType];
-
-        pendingAsset.Content = assetLoader.Load(this, pendingAsset.Path);
+        string fullPath = PathResolver.Relative(pendingAsset.Path);
+        pendingAsset.Content = assetLoader.Load(this, fullPath);
       } else {
         Log.Info(TAG, "Already loaded: " + pendingAsset.Path);
       }

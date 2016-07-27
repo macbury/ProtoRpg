@@ -3,13 +3,14 @@ using NUnit;
 using NUnit.Framework;
 using MonoRPG;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 namespace Test {
   [TestFixture()]
   public class TestAssetsManager {
-    const string EXAMPLE_TILESET_TEXTURE = "Fixtures/Tileset/Floor.png";
-    const string EXAMPLE_TILESET2_TEXTURE = "Fixtures/Tileset/Map0.png";
-    const string DEFAULT_TILESETS = "Fixtures/Tilesets/Tilesets.xml";
+    const string EXAMPLE_TILESET_TEXTURE = "Tileset/Floor.png";
+    const string EXAMPLE_TILESET2_TEXTURE = "Tileset/Map0.png";
+    const string DEFAULT_TILESETS = "Tilesets/Tilesets.xml";
 
     RPGGame game;
 
@@ -26,6 +27,7 @@ namespace Test {
 
     [Test()]
     public void ItShouldAddPendingAssetLoadingRequest() {
+      FilePathResolver resolver = new FilePathResolver();
       AssetsManager assetsManager   = new AssetsManager(game.GraphicsDevice);
       Asset textureAsset = assetsManager.Load<Texture2D>(EXAMPLE_TILESET_TEXTURE);
       Assert.IsFalse(textureAsset.Loaded);

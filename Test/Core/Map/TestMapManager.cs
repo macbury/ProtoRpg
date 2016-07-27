@@ -31,13 +31,13 @@ namespace Test {
 
     [Test()]
     public void ItShouldAllowMeToFindTileset() {
-      Tileset tileset = mapManager.Tilesets[0];
-      Assert.IsNotNull(tileset);
-      Assert.AreEqual(0, tileset.Id);
+      var tilesetA = mapManager.Tilesets[0];
+      Assert.IsNotNull(tilesetA);
+      Assert.AreEqual(0, tilesetA.Id);
 
-      tileset = mapManager.Tilesets[1];
-      Assert.AreEqual(1, tileset.Id);
-      Assert.IsNotNull(tileset);
+      var tilesetB = mapManager.Tilesets[1];
+      Assert.AreEqual(1, tilesetB.Id);
+      Assert.IsNotNull(tilesetB);
     }
   }
 }

@@ -69,6 +69,8 @@
     <Compile Include="Core\Assets\AssetLoader.cs" />
     <Compile Include="Core\Assets\Loaders\Texture2DLoader.cs" />
     <Compile Include="Core\Assets\Loaders\TilesetsLoader.cs" />
+    <Compile Include="Core\Assets\PathResolvers\IPathResolver.cs" />
+    <Compile Include="Core\Assets\PathResolvers\FilePathResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
@@ -105,5 +107,6 @@
     <Folder Include="Core\Map\" />
     <Folder Include="Core\Assets\" />
     <Folder Include="Core\Assets\Loaders\" />
+    <Folder Include="Core\Assets\PathResolvers\" />
   </ItemGroup>
 </Project>

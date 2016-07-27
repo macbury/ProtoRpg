@@ -55,28 +55,28 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Fixtures\dummy_xml_object.xml">
+    <None Include="Content\dummy_xml_object.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Fixtures\Maps\example.xml" />
-    <None Include="Fixtures\Tileset\Tilesets.xml">
+    <None Include="Content\Maps\example.xml" />
+    <None Include="Content\Tileset\Tilesets.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Fixtures\Tileset\Floor.png">
+    <None Include="Content\Tileset\Floor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Fixtures\Tileset\Map0.png">
+    <None Include="Content\Tileset\Map0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Utils\" />
-    <Folder Include="Fixtures\" />
     <Folder Include="Core\Map\" />
-    <Folder Include="Fixtures\Tileset\" />
-    <Folder Include="Fixtures\Maps\" />
     <Folder Include="Core\Assets\" />
+    <Folder Include="Content\" />
+    <Folder Include="Content\Tileset\" />
+    <Folder Include="Content\Maps\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProtoRpg\Game.csproj">
