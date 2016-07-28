@@ -3,6 +3,7 @@ solution: MonoRPG.sln
 mono:
   - latest
 install:
+  - sudo apt-get install monodevelop gtk-sharp3 ttf-mscorefonts-installer
   - wget http://www.monogame.net/releases/v3.5/monogame-sdk.deb -O /tmp/monogame-sdk.deb && sudo dpkg -i /tmp/monogame-sdk.deb
   - nuget restore MonoRPG.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
