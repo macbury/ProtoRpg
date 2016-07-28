@@ -3,6 +3,8 @@ using Gtk;
 using Cairo;
 using MonoRPG;
 using System.IO;
+using GLib;
+using System.Collections.Generic;
 
 
 namespace Editor {
@@ -76,10 +78,12 @@ namespace Editor {
 
     ImageSurface tilesetSurface;
 
-    ImageSurface tileSurface;
+    List<ImageSurface> tileSurfaces;
+
 
     public TilesetEditorWidget() {
       this.Build();
+      this.tileSurfaces = new List<ImageSurface>();
       this.mapDrawingArea.ExposeEvent += OnExpose;
     }
 
@@ -96,36 +100,27 @@ namespace Editor {
     /// <param name="o">O.</param>
     /// <param name="args">Arguments.</param>
     private void OnExpose(object o, ExposeEventArgs args) {
-      LoadTexture();
-
       Cairo.Context cr = Gdk.CairoHelper.Create(args.Event.Window);
 
       using(cr.GetTarget()) {
         using(cr) {
           cr.Antialias = Antialias.None;
           cr.SetSourceRGB(0.0, 0.0, 0.0);
+
           cr.Rectangle(new Rectangle(new Point(), Allocation.Width, Allocation.Height));
           cr.Fill();
 
 
           if (HaveTexture) {
-            for (int x = 0; x < 10; x++) {
-     
-              for (int y = 0; y < 10; y++) {
+            LoadTexture();
+            for (int x = 0; x < CurrentTileset.Width; x++) {
+              for (int y = 0; y < CurrentTileset.Height; y++) {
                 cr.NewPath();
-                cr.SetSourceSurface(tileSurface, 16*x,16 * y);
+                cr.SetSourceSurface(tileSurfaces[0], 16*x,16 * y);
                 cr.Rectangle(16*x,16 *y, 16, 16);
                 cr.Fill();
               }
             }
-
-            //cr.NewPath();
-            //cr.SetSourceSurface(tileSurface, 0,0);
-            //cr.Rectangle(0,0, 16, 16);
-            //cr.Fill();
-
-
-
           }
         }
       }
@@ -157,22 +152,29 @@ namespace Editor {
         tilesetSurface.Dispose();
 
       tilesetSurface = null;
+
+      foreach (var tileSurface in tileSurfaces) {
+        tileSurface.Dispose();
+      }
+      tileSurfaces.Clear();
     }
 
     /// <summary>
     /// Loads new texture if old one is unloaded
     /// </summary>
     private void LoadTexture() {
-      int tileSize = 16;
-      Point tilePos = new Point(0, 0);
+
       if (HaveTexture && tilesetSurface == null) {
         tilesetSurface = new ImageSurface(TextureAbsolutePath);
-        tileSurface    = new ImageSurface (Format.Argb32, tileSize, tileSize);
-        using (Context g = new Context(tileSurface)) {
-          g.SetSourceSurface(tilesetSurface, -(tilePos.X*tileSize), -(tilePos.Y*tileSize));
-          g.Paint ();
-        }
 
+        foreach (var tile in CurrentTileset.Tiles) {
+          var tileSurface    = new ImageSurface (Format.Argb32, tile.Rect.Width, tile.Rect.Height);
+          using (Context g = new Context(tileSurface)) {
+            g.SetSourceSurface(tilesetSurface, -tile.Rect.X, tile.Rect.Y);
+            g.Paint ();
+          }
+          tileSurfaces.Add(tileSurface);
+        }
       }
     }
 

@@ -1,11 +1,11 @@
 language: csharp
 solution: ProtoRpg.sln
-sudo: required
+mono:
+  - latest
 install:
-  - sudo apt-get install monodevelop libopenal-dev
   - nuget install MonoGame.Framework.Linux
   - nuget restore ProtoRpg.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=Release ProtoRpg.sln
-  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Test/bin/Release/Test.dll
+  - xbuild MonoRPG.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./Test/Test.csproj

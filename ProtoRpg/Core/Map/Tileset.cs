@@ -76,7 +76,6 @@ namespace MonoRPG {
       get { return (int)(Height * TileSize.Y); }
     }
 
-
     [XmlIgnoreAttribute]
     public int TileCount {
       get { return Tiles.Count; }
