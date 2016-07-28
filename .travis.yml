@@ -3,7 +3,7 @@ solution: MonoRPG.sln
 mono:
   - latest
 install:
-  - wget http://www.monogame.net/releases/v3.5.1/monogame-sdk.run -O /tmp/monogame-sdk.run && chmod +x /tmp/monogame-sdk.run && /tmp/monogame-sdk.run --noexec
+  - wget http://www.monogame.net/releases/v3.5/monogame-sdk.deb -O /tmp/monogame-sdk.deb && sudo dpkg -i /tmp/monogame-sdk.deb
   - nuget restore MonoRPG.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
