@@ -19,7 +19,7 @@ public partial class MainWindow: Gtk.Window {
   }
 
   protected void OnConfigureTilesetsAction(object sender, EventArgs e) {
-    TilesetsManagerDialog dialog = new TilesetsManagerDialog(game.MapManager, game.Assets);
+    TilesetsManagerDialog dialog = new TilesetsManagerDialog(game.MapManager, game.Assets, game.GraphicsDevice);
     dialog.ShowAll();
   }
 

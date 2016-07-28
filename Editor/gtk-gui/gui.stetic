@@ -204,10 +204,12 @@
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
-      <placeholder />
+      <widget class="Gtk.DrawingArea" id="mapDrawingArea">
+        <property name="MemberName" />
+      </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="Editor.TilesetsManagerDialog" design-size="800 600">
+  <widget class="Gtk.Dialog" id="Editor.TilesetsManagerDialog" design-size="900 600">
     <action-group name="Default">
       <action id="newAction">
         <property name="Type">Action</property>
@@ -245,8 +247,8 @@
       </action>
     </action-group>
     <property name="MemberName" />
-    <property name="WidthRequest">800</property>
-    <property name="HeightRequest">600</property>
+    <property name="WidthRequest">900</property>
+    <property name="HeightRequest">480</property>
     <property name="Title" translatable="yes">Configure tilesets</property>
     <property name="WindowPosition">Center</property>
     <property name="Modal">True</property>
@@ -557,120 +559,6 @@
             <property name="StockId">gtk-ok</property>
             <property name="ResponseId">-5</property>
             <signal name="Clicked" handler="OnOkButtonClicked" />
-            <property name="label">gtk-ok</property>
-          </widget>
-          <packing>
-            <property name="Position">1</property>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-  </widget>
-  <widget class="Gtk.Dialog" id="Editor.DatabaseManagerWindow" design-size="1124 683">
-    <action-group name="Default">
-      <action id="addTilesetAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Add</property>
-        <property name="ShortLabel" translatable="yes">Add</property>
-        <property name="StockId">gtk-add</property>
-      </action>
-      <action id="removeTilesetAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Remove</property>
-        <property name="ShortLabel" translatable="yes">Remove</property>
-        <property name="StockId">gtk-remove</property>
-      </action>
-      <action id="PassageAction">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes">Passage</property>
-        <property name="ShortLabel" translatable="yes">Passage</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">True</property>
-        <property name="Value">0</property>
-        <property name="Group">tilesetEditingGroup</property>
-      </action>
-      <action id="priorityAction">
-        <property name="Type">Radio</property>
-        <property name="Label" translatable="yes">Priority</property>
-        <property name="ShortLabel" translatable="yes">Priority</property>
-        <property name="DrawAsRadio">False</property>
-        <property name="Active">False</property>
-        <property name="Value">0</property>
-        <property name="Group">tilesetEditingGroup</property>
-      </action>
-    </action-group>
-    <property name="MemberName" />
-    <property name="Title" translatable="yes">DatabaseManager</property>
-    <property name="WindowPosition">CenterOnParent</property>
-    <property name="Modal">True</property>
-    <property name="DefaultWidth">900</property>
-    <property name="DefaultHeight">600</property>
-    <property name="DestroyWithParent">True</property>
-    <property name="Buttons">2</property>
-    <property name="HelpButton">False</property>
-    <child internal-child="VBox">
-      <widget class="Gtk.VBox" id="dialog1_VBox">
-        <property name="MemberName" />
-        <property name="BorderWidth">2</property>
-        <child>
-          <widget class="Gtk.Notebook" id="notebook1">
-            <property name="MemberName" />
-            <property name="CanFocus">True</property>
-            <property name="CurrentPage">0</property>
-            <child>
-              <placeholder />
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="tilesetsPage">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">Tilesets</property>
-              </widget>
-              <packing>
-                <property name="type">tab</property>
-              </packing>
-            </child>
-          </widget>
-          <packing>
-            <property name="Position">0</property>
-            <property name="AutoSize">True</property>
-          </packing>
-        </child>
-      </widget>
-    </child>
-    <child internal-child="ActionArea">
-      <widget class="Gtk.HButtonBox" id="dialog1_ActionArea">
-        <property name="MemberName" />
-        <property name="Spacing">10</property>
-        <property name="BorderWidth">5</property>
-        <property name="Size">2</property>
-        <property name="LayoutStyle">End</property>
-        <child>
-          <widget class="Gtk.Button" id="buttonCancel">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-cancel</property>
-            <property name="ResponseId">-6</property>
-            <property name="label">gtk-cancel</property>
-          </widget>
-          <packing>
-            <property name="Expand">False</property>
-            <property name="Fill">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="Gtk.Button" id="buttonOk">
-            <property name="MemberName" />
-            <property name="CanDefault">True</property>
-            <property name="CanFocus">True</property>
-            <property name="UseStock">True</property>
-            <property name="Type">StockItem</property>
-            <property name="StockId">gtk-ok</property>
-            <property name="ResponseId">-5</property>
             <property name="label">gtk-ok</property>
           </widget>
           <packing>

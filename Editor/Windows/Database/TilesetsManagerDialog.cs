@@ -3,6 +3,7 @@ using MonoRPG;
 using Gtk;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Editor {
 
@@ -31,15 +32,20 @@ namespace Editor {
   public partial class TilesetsManagerDialog : Gtk.Dialog {
     MapManager mapManager;
     AssetsManager assets;
+    GraphicsDevice graphicsDevice;
 
     const string TAG = "TilesetsManagerDialog";
 
-    public TilesetsManagerDialog(MapManager mapManager, AssetsManager assets) {
+    public TilesetsManagerDialog(MapManager mapManager, AssetsManager assets, GraphicsDevice graphicsDevice) {
       this.mapManager = mapManager;
       this.assets = assets;
+      this.graphicsDevice = graphicsDevice;
 
       Destroyed += OnClose;
       this.Build();
+
+      tilesetEditor.MapManager = mapManager;
+      tilesetEditor.AssetsManager = assets;
 
       tilesetsNodeView.AppendColumn("Id", new CellRendererText(), "text", 0);
       tilesetsNodeView.AppendColumn("Name", new CellRendererText(), "text", 1);
@@ -55,6 +61,10 @@ namespace Editor {
       RefreshUI();
     }
 
+    /// <summary>
+    /// Reference to tileset in tilesetEditor
+    /// </summary>
+    /// <value>The current tileset.</value>
     private Tileset CurrentTileset { get { return tilesetEditor.CurrentTileset; } }
 
     /// <summary>
@@ -111,15 +121,26 @@ namespace Editor {
     /// <param name="o">O.</param>
     /// <param name="args">Arguments.</param>
     private void OnClose(object o, EventArgs args) {
+      tilesetEditor.Dispose();
       mapManager.ReloadTilesets();
       mapManager = null;
     }
 
+    /// <summary>
+    /// Close window and save tileset
+    /// </summary>
+    /// <param name="sender">Sender.</param>
+    /// <param name="e">E.</param>
     protected void OnOkButtonClicked(object sender, EventArgs e) {
       mapManager.SaveTilesets();
       Destroy();
     }
 
+    /// <summary>
+    /// Close window
+    /// </summary>
+    /// <param name="sender">Sender.</param>
+    /// <param name="e">E.</param>
     protected void OnCancelButtonClicked(object sender, EventArgs e) {
       Destroy();
     }
@@ -136,6 +157,11 @@ namespace Editor {
       }
     }
 
+    /// <summary>
+    /// Show select file dialog. If user select diffrent tileset, then move it to tileset directory and clear and create new tileset data
+    /// </summary>
+    /// <param name="sender">Sender.</param>
+    /// <param name="e">E.</param>
     protected void OnSelectTilesetGraphicsButtonClicked(object sender, EventArgs e) {
       DirectoryInfo tilesetsAbsolutePath = new DirectoryInfo(assets.PathResolver.Absolute(MapManager.TILESET_DIR));
       using(FileChooserDialog fileChooser = new FileChooserDialog ("Import Tileset", this, FileChooserAction.Open)) {
@@ -175,7 +201,22 @@ namespace Editor {
           } else {
             Log.Info(TAG, "We dont need to move this file" + fileChooser.Filename);
           }
-          tilesetGraphicsEntry.Text = CurrentTileset.TextureName = tilesetFileName;
+
+          if (CurrentTileset.TextureName != tilesetFileName) {
+            Log.Info(TAG, "New tileset detected! " + fileChooser.Filename);
+            tilesetGraphicsEntry.Text = CurrentTileset.TextureName = tilesetFileName;
+
+            //TODO check if graphic did change then reload settings
+            using(var file = File.OpenRead(tilesetFile.FullName)) {
+              using (var texture = Texture2D.FromStream(graphicsDevice, file)) {
+                CurrentTileset.SetupUsingTexture(texture, mapManager.TileSize);
+              }
+            }
+
+            tilesetEditor.Reload();
+          } else {
+            Log.Info(TAG, "Selected tileset with the same name. Ignorign it: " + fileChooser.Filename);
+          }
         }
 
         fileChooser.Hide();

@@ -59,6 +59,23 @@ namespace MonoRPG {
     }
 
     public Vector2 TileSize;
+     
+    /// <summary>
+    /// Width of texture
+    /// </summary>
+    /// <value>The width in pixels.</value>
+    public int WidthInPixels {
+      get { return (int)(Width * TileSize.X); }
+    }
+
+    /// <summary>
+    /// Height of texture
+    /// </summary>
+    /// <value>The height in pixels.</value>
+    public int HeightInPixels {
+      get { return (int)(Height * TileSize.Y); }
+    }
+
 
     [XmlIgnoreAttribute]
     public int TileCount {

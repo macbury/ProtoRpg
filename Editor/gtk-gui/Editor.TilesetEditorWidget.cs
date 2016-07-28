@@ -4,12 +4,18 @@ namespace Editor
 {
 	public partial class TilesetEditorWidget
 	{
+		private global::Gtk.DrawingArea mapDrawingArea;
+
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
 			// Widget Editor.TilesetEditorWidget
 			global::Stetic.BinContainer.Attach (this);
 			this.Name = "Editor.TilesetEditorWidget";
+			// Container child Editor.TilesetEditorWidget.Gtk.Container+ContainerChild
+			this.mapDrawingArea = new global::Gtk.DrawingArea ();
+			this.mapDrawingArea.Name = "mapDrawingArea";
+			this.Add (this.mapDrawingArea);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
 			}

@@ -19,7 +19,7 @@ namespace MonoRPG {
 
     const string TAG = "MapManager";
 
-    int TileSize;
+    public int TileSize { private set; get; }
 
     public MapManager(AssetsManager assetsManager, int TileSize) {
       this.assetsManager = assetsManager;
@@ -27,6 +27,8 @@ namespace MonoRPG {
 
       this.ReloadTilesets();
     }
+
+
 
     #region Tileset
     /// <summary>
@@ -37,6 +39,22 @@ namespace MonoRPG {
       get {
         return Path.Combine(TILESET_DIR, TILESETS_FILE);
       }
+    }
+
+    /// <summary>
+    /// Relative path to tileset texture
+    /// </summary>
+    /// <returns>The texture path.</returns>
+    /// <param name="tilesetName">Tileset name.</param>
+    public String TilesetTexturePath(Tileset tileset) {
+      return Path.Combine(TILESET_DIR, tileset.TextureName);
+    }
+
+    /// <summary>
+    /// Absolute path to tileset texture
+    /// </summary>
+    public string TilesetTextureAbsolutePath(Tileset tileset) {
+      return assetsManager.PathResolver.Absolute(TilesetTexturePath(tileset));
     }
 
     /// <summary>
