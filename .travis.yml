@@ -1,10 +1,10 @@
 language: csharp
-solution: ProtoRpg.sln
+solution: MonoRPG.sln
 mono:
   - latest
 install:
   - nuget install MonoGame.Framework.Linux
-  - nuget restore ProtoRpg.sln
+  - nuget restore MonoRPG.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild MonoRPG.sln
