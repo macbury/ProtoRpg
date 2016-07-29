@@ -85,6 +85,40 @@ namespace MonoRPG {
       
     }
 
+    #region Gid calculation
+    /// <summary>
+    /// Calculates gid from passed coordinates
+    /// </summary>
+    /// <returns>The gid.</returns>
+    /// <param name="x">The x coordinate.</param>
+    /// <param name="y">The y coordinate.</param>
+    public int PointToGid(int x, int y) {
+      return (x + y * Width) + StartGidOffset;
+    }
+
+    /// <summary>
+    /// Calculates point on tilemap for passed gid
+    /// </summary>
+    /// <returns>The to point.</returns>
+    /// <param name="gid">Gid.</param>
+    public Point GidToPoint(int gid) {
+      int localGid = gid - StartGidOffset;
+      Point point = new Point();
+      point.Y = (int)(localGid / Width);
+      point.X = localGid - (point.Y * Width);
+      return point;
+    }
+
+    /// <summary>
+    /// Calculates gid from passed coordinates of tileset
+    /// </summary>
+    /// <returns>The to gid.</returns>
+    /// <param name="point">Point.</param>
+    public int PointToGid(Point point) {
+      return PointToGid(point.X, point.Y);
+    }
+    #endregion
+
     /// <summary>
     /// Using information from texture generates new tiles
     /// </summary>
