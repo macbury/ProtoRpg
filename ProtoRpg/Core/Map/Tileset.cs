@@ -130,11 +130,9 @@ namespace MonoRPG {
       Width = texture.Width / tileSize;
       Height = texture.Height / tileSize;
       Tiles = new List<Tile>();
-
-      int gid = StartGidOffset;
-      for (int col = 0; col < Width; col++) {
-        for (int row = 0; row < Height; row++) {
-          var tile       = new Tile() { Id = gid++ };
+      for (int row = 0; row < Height; row++) {
+        for (int col = 0; col < Width; col++) {
+          var tile       = new Tile() { Id = PointToGid(col, row) };
           var size       = new Point(tileSize, tileSize);
           var tileOffset = new Point(col, row) * size;
           tile.Rect      = new Rectangle(tileOffset, size);
@@ -154,7 +152,7 @@ namespace MonoRPG {
         if (index < 0 || index > Tiles.Count) {
           throw new TileNotFound(gid);
         }
-        return Tiles[gid - StartGidOffset];
+        return Tiles[index];
       }
     }
 
